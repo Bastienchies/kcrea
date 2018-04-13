@@ -32,7 +32,8 @@
 
     <!-- vendor css -->
     <link href="{{ asset('lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
-    <link href="{{ asset('lib/Ionicons/css/ionicons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('lib/Ionicons/css/ionicons.css')}}" rel="stylesheet" />
+    <link href="{{ asset('lib/select2/css/select2.min.css') }}" rel="stylesheet" />
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('css/bracket.css') }}" />
@@ -40,30 +41,46 @@
 
 <body>
 
-<div class="d-flex align-items-center justify-content-center ht-100v">
-    <img src="{{ asset('img/img22.jpg') }}" class="wd-100p ht-100p object-fit-cover" alt="" />
-    <div class="overlay-body bg-black-6 d-flex align-items-center justify-content-center">
-        <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 rounded bd bd-white-2 bg-black-7">
-            <div class="signin-logo tx-center tx-28 tx-bold tx-white"><span class="tx-normal">[</span> My <span class="tx-info">TEK</span> <span class="tx-normal">]</span></div>
-            <div class="tx-white-5 tx-center mg-b-60">Plateforme ... mediathéque.</div>
+<div class="d-flex align-items-center justify-content-center bg-br-primary ht-100v" style="background: url('https://wallpapersite.com/images/wallpapers/passengers-5120x2880-2016-jennifer-lawrence-chris-pratt-5k-4004.jpg') center fixed;-webkit-background-size: cover;background-size: cover;">
 
-            <div class="form-group">
-                <input type="text" class="form-control fc-outline-dark" placeholder="Entrez votre nom d'utilisateur" />
-            </div><!-- form-group -->
-            <div class="form-group">
-                <input type="password" class="form-control fc-outline-dark" placeholder="Entrez votre mot de passe" />
-                <a href="./signin-img.html" class="tx-info tx-12 d-block mg-t-10">Mot de passe oublié ?</a>
-            </div><!-- form-group -->
-            <button type="submit" class="btn btn-info btn-block">Connexion</button>
+    <div class="login-wrapper wd-300 wd-xs-400 pd-25 pd-xs-40 bg-white rounded shadow-base">
+        <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><span class="tx-normal">[</span> My <span class="tx-info">TEK</span> <span class="tx-normal">]</span></div>
+        <div class="tx-center mg-b-40">Un slogan à mettre ici.</div>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_widget(form.firstname) }}
+        </div><!-- form-group -->
+        <div class="form-group">
+            {{ form_widget(form.lastname) }}
+        </div><!-- form-group -->
+        <div class="form-group">
+            {{ form_widget(form.mail) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.password) }}
+        </div>
+        <!-- form-group -->
 
-            <div class="mg-t-60 tx-center">Pas encore membre ? <a href="./register" class="tx-info">Enregistrement</a></div>
-        </div><!-- login-wrapper -->
-    </div><!-- overlay-body -->
+        <div class="form-group tx-12">En cliquant sur le bouton ci-dessous, vous acceptez notre politique ainsi que les termes et conditions de notre site internet.</div>
+        {{ form_widget(form.enregistrement) }}
+        {{ form_end(form) }}
+        <div class="mg-t-40 tx-center">Déjà membre ? <a href="./login" class="tx-info">Connexion</a></div>
+    </div><!-- login-wrapper -->
 </div><!-- d-flex -->
 
 <script src="{{ asset('lib/jquery/jquery.js') }}"></script>
 <script src="{{ asset('lib/popper.js/popper.js') }}"></script>
 <script src="{{ asset('lib/bootstrap/bootstrap.js') }}"></script>
+<script src="{{ asset('lib/select2/js/select2.min.js') }}"></script>
+<script>
+    $(function(){
+        'use strict';
+
+        $('.select2').select2({
+            minimumResultsForSearch: Infinity
+        });
+    });
+</script>
 
 </body>
 </html>
