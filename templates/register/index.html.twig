@@ -37,10 +37,12 @@
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('css/bracket.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 
 <body>
-
+<div class="loader"></div>
+<!-- rest of the page... -->
 <div class="d-flex align-items-center justify-content-center bg-br-primary ht-100v" style="background: url('https://wallpapersite.com/images/wallpapers/passengers-5120x2880-2016-jennifer-lawrence-chris-pratt-5k-4004.jpg') center fixed;-webkit-background-size: cover;background-size: cover;">
 
     <div class="login-wrapper wd-300 wd-xs-400 pd-25 pd-xs-40 bg-white rounded shadow-base">
@@ -48,16 +50,24 @@
         <div class="tx-center mg-b-40">Un slogan à mettre ici.</div>
         {{ form_start(form) }}
         <div class="form-group">
-            {{ form_widget(form.firstname) }}
+            {{ form_widget(form.nom_utilisateur) }}
+            {{ form_errors(form.nom_utilisateur) }}
         </div><!-- form-group -->
         <div class="form-group">
-            {{ form_widget(form.lastname) }}
+            {{ form_widget(form.prenom_utilisateur) }}
+            {{ form_errors(form.prenom_utilisateur) }}
         </div><!-- form-group -->
         <div class="form-group">
-            {{ form_widget(form.mail) }}
+            {{ form_widget(form.email_utilisateur) }}
+            {{ form_errors(form.email_utilisateur) }}
         </div>
         <div class="form-group">
-            {{ form_widget(form.password) }}
+            {{ form_widget(form.password_utilisateur.first) }}
+            {{ form_errors(form.password_utilisateur.first) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.password_utilisateur.second) }}
+            {{ form_errors(form.password_utilisateur.second) }}
         </div>
         <!-- form-group -->
 
@@ -73,6 +83,9 @@
 <script src="{{ asset('lib/bootstrap/bootstrap.js') }}"></script>
 <script src="{{ asset('lib/select2/js/select2.min.js') }}"></script>
 <script>
+    $(window).load(function() {
+        $(".loader").fadeOut("1000");
+    })
     $(function(){
         'use strict';
 
@@ -80,6 +93,7 @@
             minimumResultsForSearch: Infinity
         });
     });
+
 </script>
 
 </body>
