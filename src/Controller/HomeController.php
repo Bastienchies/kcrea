@@ -14,6 +14,7 @@ class HomeController extends Controller
     {
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            'session'   => $_SESSION['_sf2_attributes']
         ]);
     }
 }
