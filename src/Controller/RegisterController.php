@@ -27,12 +27,13 @@ class RegisterController extends Controller
         $user = new Utilisateur();
 
         $form = $this->createFormBuilder($user)
-            ->add('nom_utilisateur', TextType::class ,[
-                'attr' => ['class' => 'form-control','name' => 'password','placeholder' => 'Prénom'],
-                ])
             ->add('prenom_utilisateur', TextType::class, [
-                'attr' => ['class' => 'form-control','name' => 'password','placeholder' => 'Nom'],
+                'attr' => ['class' => 'form-control','name' => 'nom','placeholder' => 'Prénom'],
             ])
+
+            ->add('nom_utilisateur', TextType::class ,[
+                'attr' => ['class' => 'form-control','name' => 'prenom','placeholder' => 'Nom'],
+                ])
             ->add('email_utilisateur', EmailType::class, [
                 'attr' => ['class' => 'form-control','name' => 'password','placeholder' => 'Adresse mail'],
             ])
@@ -50,32 +51,32 @@ class RegisterController extends Controller
             ->getForm();
 
         $form->handleRequest($request);
-        var_dump($request->getSession()->getFlashBag());
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
             $user = $form->getData();
-            /*$hashedpass = hash('sha256',$user->getPasswordUtilisateur());
+            $hashedpass = hash('sha256',$user->getPasswordUtilisateur());
             $user->setPasswordUtilisateur($hashedpass);
             $user->setAvatarUtilisateur('default_avatar.jpg');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
-            $entityManager->flush();*/
+            $entityManager->flush();
 
-            $request->getSession()
-                ->getFlashBag()
-                ->add('success-register-msg', 'Inscription effectué, un mail de confirmation vous a été envoyé!')
-            ;
-            $request->getSession()->getFlashBag()->add('success-register-name', $user->getPrenomUtilisateur() .' '. $user->getNomUtilisateur());
-            $request->getSession()->getFlashBag()->add('success-register-mail' , $user->getEmailUtilisateur());
-            $request->getSession()->getFlashBag()->clear();
 
+            $request->getSession()->getFlashBag()
+                ->add('success-register-name', $user->getPrenomUtilisateur() .' '. $user->getNomUtilisateur());
+            $request->getSession()->getFlashbag()
+                ->add('success-register-mail', $user->getEmailUtilisateur());
             //return $this->redirectToRoute('task_success');
         }
+
+
         return $this->render('register/index.html.twig', [
             'controller_name' => 'RegisterController',
             'form' => $form->createView(),
         ]);
+
     }
 }
