@@ -44,8 +44,29 @@
 <div class="loader"></div>
 <!-- rest of the page... -->
 <div class="d-flex align-items-center justify-content-center bg-br-primary ht-100v" style="background: url('https://wallpapersite.com/images/wallpapers/passengers-5120x2880-2016-jennifer-lawrence-chris-pratt-5k-4004.jpg') center fixed;-webkit-background-size: cover;background-size: cover;">
-
     <div class="login-wrapper wd-300 wd-xs-400 pd-25 pd-xs-40 bg-white rounded shadow-base">
+        {% if app.session.flashBag.has('success') %}
+        <div id="modaldemo4" class="modal fade">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content tx-size-sm">
+                    <div class="modal-body tx-center pd-y-20 pd-x-20">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <i class="icon ion-ios-checkmark-outline tx-100 tx-success lh-1 mg-t-20 d-inline-block"></i>
+                        <h4 class="tx-success tx-semibold mg-b-20">Félicitations {{ dump(app.session.flashBag.get('success-register-nom')) }}!</h4>
+                        <p class="mg-b-20 mg-x-20">
+                            {% for msg in app.session.flashBag.get('success-register-msg') %}
+                                {{ msg }}
+                            {% endfor %}.
+                        </p>
+                        <button type="button" class="btn btn-success tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium mg-b-20" data-dismiss="modal" aria-label="Close">
+                            Continuer</button>
+                    </div><!-- modal-body -->
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+        {% endif %}
         <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><span class="tx-normal">[</span> My <span class="tx-info">TEK</span> <span class="tx-normal">]</span></div>
         <div class="tx-center mg-b-40">Un slogan à mettre ici.</div>
         {{ form_start(form) }}
@@ -85,6 +106,15 @@
 <script>
     $(window).load(function() {
         $(".loader").fadeOut("1000");
+
+        if ($("#modaldemo4").length === 1){
+                $('#modaldemo4').modal('show');
+            console.log("Modal trouvé");
+        }
+        else {
+            console.log('Modal non trouvé');
+        }
+
     })
     $(function(){
         'use strict';

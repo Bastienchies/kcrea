@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -21,6 +22,8 @@ class RegisterController extends Controller
      */
     public function index(Request $request)
     {
+        $request->getSession()->getFlashBag()->clear();
+
         $user = new Utilisateur();
 
         $form = $this->createFormBuilder($user)
@@ -47,22 +50,29 @@ class RegisterController extends Controller
             ->getForm();
 
         $form->handleRequest($request);
-
+        var_dump($request->getSession()->getFlashBag());
         if ($form->isSubmitted() && $form->isValid()) {
 
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
             $user = $form->getData();
-
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
+            /*$hashedpass = hash('sha256',$user->getPasswordUtilisateur());
+            $user->setPasswordUtilisateur($hashedpass);
+            $user->setAvatarUtilisateur('default_avatar.jpg');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
-            $entityManager->flush();
-            var_dump($user);
+            $entityManager->flush();*/
+
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success-register-msg', 'Inscription effectué, un mail de confirmation vous a été envoyé!')
+            ;
+            $request->getSession()->getFlashBag()->add('success-register-name', $user->getPrenomUtilisateur() .' '. $user->getNomUtilisateur());
+            $request->getSession()->getFlashBag()->add('success-register-mail' , $user->getEmailUtilisateur());
+            $request->getSession()->getFlashBag()->clear();
+
             //return $this->redirectToRoute('task_success');
         }
-
         return $this->render('register/index.html.twig', [
             'controller_name' => 'RegisterController',
             'form' => $form->createView(),
