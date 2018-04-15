@@ -143,15 +143,15 @@
             </div><!-- dropdown -->
             <div class="dropdown">
                 <a href="./index.html" class="nav-link nav-link-profile" data-toggle="dropdown">
-                    <span class="logged-name hidden-md-down">Katherine</span>
-                    <img src="../img/img1.jpg" class="wd-32 rounded-circle" alt="" />
+                    <span class="logged-name hidden-md-down">{{ session.prenom }}</span>
+                    <img src="{{ asset('img/avatars/' ~ session.avatar) }}" class="wd-32 rounded-circle" alt="" />
                     <span class="square-10 bg-success"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-header wd-250">
                     <div class="tx-center">
-                        <a href="./index.html"><img src="../img/img1.jpg" class="wd-80 rounded-circle" alt="" /></a>
-                        <h6 class="mg-t-15 mg-b-5 tx-gray-800">Katherine P. Lumaad</h6>
-                        <p class="tx-12 tx-gray-600">youremail@domain.com</p>
+                        <a href="./index.html"><img src="{{ asset('img/avatars/' ~ session.avatar) }}" class="wd-80 rounded-circle" alt="" /></a>
+                        <h6 class="mg-t-15 mg-b-5 tx-gray-800">{{ session.prenom }} {{ session.nom }}</h6>
+                        <p class="tx-12 tx-gray-600">{{ session.email }}</p>
                     </div>
                     <hr />
                     <div class="tx-center">

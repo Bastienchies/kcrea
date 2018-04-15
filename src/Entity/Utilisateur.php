@@ -12,7 +12,7 @@ class Utilisateur
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id_utilisateur",type="integer")
      */
     private $id;
 
