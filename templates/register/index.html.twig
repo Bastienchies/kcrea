@@ -37,27 +37,57 @@
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('css/bracket.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 
 <body>
-
+<div class="loader"></div>
+<!-- rest of the page... -->
 <div class="d-flex align-items-center justify-content-center bg-br-primary ht-100v" style="background: url('https://wallpapersite.com/images/wallpapers/passengers-5120x2880-2016-jennifer-lawrence-chris-pratt-5k-4004.jpg') center fixed;-webkit-background-size: cover;background-size: cover;">
-
     <div class="login-wrapper wd-300 wd-xs-400 pd-25 pd-xs-40 bg-white rounded shadow-base">
+        {% if app.session.flashBag.has('success-register-name') %}
+        <div id="modaldemo4" class="modal fade">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content tx-size-sm">
+                    <div class="modal-body tx-center pd-y-20 pd-x-20">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <i class="icon ion-ios-checkmark-outline tx-100 tx-success lh-1 mg-t-20 d-inline-block"></i>
+                        <h4 class="tx-success tx-semibold mg-b-20">Félicitations {{ app.session.flashBag.get('success-register-name')[0] }}!</h4>
+                        <p class="mg-b-20 mg-x-20">
+                            Inscription effectué, un mail de confirmation vous a été envoyé à l'adresse suivante: <b><i>{{ app.session.flashBag.get('success-register-mail')[0] }}</i></b>. Veuillez cliquer sur le lien reçu pour pouvoir accéder à votre compte.
+                        </p>
+                        <button type="button" class="btn btn-success tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium mg-b-20" data-dismiss="modal" aria-label="Close">
+                            Continuer</button>
+                    </div><!-- modal-body -->
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+        {% endif %}
         <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><span class="tx-normal">[</span> My <span class="tx-info">TEK</span> <span class="tx-normal">]</span></div>
         <div class="tx-center mg-b-40">Un slogan à mettre ici.</div>
         {{ form_start(form) }}
         <div class="form-group">
-            {{ form_widget(form.firstname) }}
+            {{ form_widget(form.prenom_utilisateur) }}
+            {{ form_errors(form.prenom_utilisateur) }}
+        </div><!-- form-group -->
+
+        <div class="form-group">
+            {{ form_widget(form.nom_utilisateur) }}
+            {{ form_errors(form.nom_utilisateur) }}
         </div><!-- form-group -->
         <div class="form-group">
-            {{ form_widget(form.lastname) }}
-        </div><!-- form-group -->
-        <div class="form-group">
-            {{ form_widget(form.mail) }}
+            {{ form_widget(form.email_utilisateur) }}
+            {{ form_errors(form.email_utilisateur) }}
         </div>
         <div class="form-group">
-            {{ form_widget(form.password) }}
+            {{ form_widget(form.password_utilisateur.first) }}
+            {{ form_errors(form.password_utilisateur.first) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.password_utilisateur.second) }}
+            {{ form_errors(form.password_utilisateur.second) }}
         </div>
         <!-- form-group -->
 
@@ -73,6 +103,18 @@
 <script src="{{ asset('lib/bootstrap/bootstrap.js') }}"></script>
 <script src="{{ asset('lib/select2/js/select2.min.js') }}"></script>
 <script>
+    $(window).load(function() {
+        $(".loader").fadeOut("1000");
+
+        if ($("#modaldemo4").length === 1){
+                $('#modaldemo4').modal('show');
+            console.log("Modal trouvé");
+        }
+        else {
+            console.log('Modal non trouvé');
+        }
+
+    })
     $(function(){
         'use strict';
 
@@ -80,6 +122,7 @@
             minimumResultsForSearch: Infinity
         });
     });
+
 </script>
 
 </body>
