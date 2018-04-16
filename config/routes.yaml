@@ -9,3 +9,7 @@ login:
 home:
     path: /home
     controller: App\Controller\HomeController::index
+
+profile:
+    path: /profile
+    controller: App\Controller\ProfileController::index
