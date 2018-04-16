@@ -19,9 +19,7 @@ class LoginController extends Controller
     public function index(Request $request)
     {
         if(isset($_SESSION['_sf2_attributes']['nom'])) {
-            return $this->render('home/index.html.twig', array(
-                'session'   => $_SESSION['_sf2_attributes']
-            ));
+            return $this->redirectToRoute('home');
         }
 
         $user = new Utilisateur();
@@ -73,9 +71,6 @@ class LoginController extends Controller
             }
         }
 
-        return $this->render('login/index.html.twig', [
-            'controller_name' => 'LoginController',
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('home');
     }
 }
