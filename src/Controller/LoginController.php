@@ -57,20 +57,20 @@ class LoginController extends Controller
                     $session->set('prenom', $utilisateur->getPrenomUtilisateur());
                     $session->set('email', $utilisateur->getEmailUtilisateur());
                     $session->set('avatar', $utilisateur->getAvatarUtilisateur());
-                    return $this->render('home/index.html.twig', array(
-                        'session'   => $_SESSION['_sf2_attributes']
-                    ));
+                    return $this->redirectToRoute('home');
                 }
             }
             else
             {
-                return $this->render('login/login.html.twig',array(
+                return $this->render('login/index.html.twig',array(
                     'form' => $form->createView(),
                     'errorMessage' => 'Identifiants invalides.'
                 ));
             }
         }
 
-        return $this->redirectToRoute('home');
+        return $this->render('login/index.html.twig',array(
+            'form' => $form->createView(),
+        ));
     }
 }
