@@ -13,3 +13,7 @@ home:
 profile:
     path: /profile
     controller: App\Controller\ProfileController::index
+
+groups:
+    path: /groups
+    controller: App\Controller\GroupsController::index
