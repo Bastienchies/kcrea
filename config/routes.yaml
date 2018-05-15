@@ -17,3 +17,7 @@ profile:
 groups:
     path: /groups
     controller: App\Controller\GroupsController::index
+
+api_media:
+    path: /api_media
+    controller: App\Controller\ApiMediaController::index
