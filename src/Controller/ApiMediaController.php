@@ -22,30 +22,34 @@ class ApiMediaController extends Controller
 
         $film = new Film;
 
-        $movie[] = Imdb::retrieve('the matrix');
+        $movie[] = Imdb::retrieve('Black Panther');
         $film->setTitre(array_column($movie,'title'));
-        $film->setTitre(array_column($movie,'year'));
-        $film->setTitre(array_column($movie,'pegi'));
-        $film->setTitre(array_column($movie,'realisation'));
-        $film->setTitre(array_column($movie,'scenariste'));
-        $film->setTitre(array_column($movie,'acteur'));
-        $film->setTitre(array_column($movie,'intrigue'));
-        $film->setTitre(array_column($movie,'langue'));
-        $film->setTitre(array_column($movie,'pays'));
+        $film->setYear(array_column($movie,'year'));
+        $film->setPegi(array_column($movie,'rated'));
+        $film->setRealisation(array_column($movie,'released'));
+        $film->setDuree(array_column($movie,'runtime'));
+        $film->setGenre(array_column($movie,'genre'));
+        $film->setRealisateur(array_column($movie,'director'));
+        $film->setScenariste(array_column($movie,'writer'));
+        $film->setActeur(array_column($movie,'actors'));
+        $film->setIntrigue(array_column($movie,'plot'));
+        $film->setLangue(array_column($movie,'language'));
+        $film->setPays(array_column($movie,'country'));
         $film->setPoster(array_column($movie, 'poster'));
-        $film->setPoster(array_column($movie, 'note'));
 
         $titre = $film->getTitre();
         $year = $film->getYear();
         $pegi = $film->getPegi();
         $realisation = $film->getRealisation();
+        $duree = $film->getDuree();
+        $genre = $film->getGenre();
+        $realisateur = $film->getRealisateur();
         $scenariste = $film->getScenariste();
         $acteur = $film->getActeur();
         $intrigue = $film->getIntrigue();
         $langue = $film->getLangue();
         $pays = $film->getPays();
         $poster = $film->getPoster();
-        $note = $film->getNote();
 
         return $this->render('api_media/index.html.twig', [
             'controller_name' => 'ApiMediaController',
@@ -53,13 +57,15 @@ class ApiMediaController extends Controller
             'year' => $year[0],
             'pegi' => $pegi[0],
             'realisation' => $realisation[0],
+            'duree' => $duree[0],
+            'genre' => $genre[0],
+            'realisateur' => $realisateur[0],
             'scenariste' => $scenariste[0],
             'acteur' => $acteur[0],
             'intrigue' => $intrigue[0],
             'langue' => $langue[0],
             'pays' => $pays[0],
             'poster' => $poster[0],
-            'note' => $note[0],
         ]);
 
     }

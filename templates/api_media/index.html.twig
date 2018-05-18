@@ -12,15 +12,17 @@
     <h1>{{ titre }}</h1>
     <ul>
         <li><img src="{{ poster }}"/></li>
-        <li>{{ year }}</li>
-        <li>{{ pegi }}</li>
-        <li>{{ realisation }}</li>
-        <li>{{ scenariste }}</li>
-        <li>{{ acteur }}</li>
-        <li>{{ intrigue }}</li>
-        <li>{{ langue }}</li>
-        <li>{{ pays }}</li>
-        <li>{{ note }}</li>
+        <li><b>Année de sortie :</b> {{ year }}</li>
+        <li><b>Age minimum conseillé :</b>{{ pegi }}</li>
+        <li><b>Realisation :</b> {{ realisation }}</li>
+        <li><b>Durée :</b> {{ duree }}</li>
+        <li><b>Genre :</b> {{ genre }}</li>
+        <li><b>Realisateur(s) :</b> {{ realisateur }}</li>
+        <li><b>Scenariste(s) :</b> {{ scenariste }}</li>
+        <li><b>Acteur(s) :</b> {{ acteur }}</li>
+        <li><b>Synopsis :</b> {{ intrigue }}</li>
+        <li><b>Langue :</b> {{ langue }}</li>
+        <li><b>Pays :</b> {{ pays }}</li>
     </ul>
 </div>
 {% endblock %}
