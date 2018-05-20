@@ -53,6 +53,7 @@ class ApiMediaController extends Controller
 
         return $this->render('api_media/index.html.twig', [
             'controller_name' => 'ApiMediaController',
+            //'session'   => $_SESSION['_sf2_attributes'],
             'titre' => $titre[0],
             'year' => $year[0],
             'pegi' => $pegi[0],
