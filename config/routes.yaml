@@ -18,6 +18,6 @@ groups:
     path: /groups
     controller: App\Controller\GroupsController::index
 
-api_media:
-    path: /api_media
-    controller: App\Controller\ApiMediaController::index
+create_group:
+    path: /create_groupe
+    controller: App\Controller\CreateGroupController::index
