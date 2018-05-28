@@ -40,7 +40,7 @@ class LoginController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        icdf ($form->isSubmitted() && $form->isValid()) {
             $credentials = $form->getData();
             $hashedpass = hash('sha256',$credentials['password_utilisateur']);
             $repository = $this->getDoctrine()->getRepository(Utilisateur::class);
