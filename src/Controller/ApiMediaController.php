@@ -22,7 +22,7 @@ class ApiMediaController extends Controller
 
         $film = new Film;
 
-        $movie[] = Imdb::retrieve('Black Panther');
+        $movie[] = Imdb::retrieve('deadpool');
         $film->setTitre(array_column($movie,'title'));
         $film->setYear(array_column($movie,'year'));
         $film->setPegi(array_column($movie,'rated'));
