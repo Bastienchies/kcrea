@@ -14,3 +14,29 @@ height : 100%;
 width : 100%;
 cursor : wait;
 }
+
+.btn-space
+{
+	margin-bottom: 1%;
+}
+
+.img-grp
+{
+    height: 50px;
+    width: 50px;
+}
+
+.titre-grp
+{
+    font-weight: bold;
+}
+
+.description-grp
+{
+    font-weight: normal;
+}
+
+.btn-click
+{
+    cursor: hand;
+}

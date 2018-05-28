@@ -1,0 +1,129 @@
+<body>
+{% include 'common/navLeft.html.twig' %}
+{% include 'common/navTop.html.twig' %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="br-mainpanel">
+    <div class="d-sm-flex align-items-center pd-y-20 pd-x-30 bg-gray-200">
+        <div class="tab-pane" id="settings">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card pd-20 pd-xs-30 shadow-base bd-0 mg-t-30">
+                        <h6 class="tx-gray-800 tx-uppercase tx-semibold tx-14 mg-b-30">Mes groupes</h6>
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td><img src="{{ asset('img/groups/marvel.png') }}" class="img-fluid rounded-circle img-grp" alt=""></td>
+                                <td>
+                                    <span class="titre-grp">Les fans de Marvel</span>
+                                    <p class="description-grp">Ici on mettra une description pour le groupe Marvel.</p>
+                                </td>
+                                <td><a href="#"><button class="btn btn-primary btn-click">Voir</button></a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="{{ asset('img/groups/ff.jpg') }}" class="img-fluid rounded-circle img-grp" alt=""></td>
+                                <td>
+                                    <span class="titre-grp">Something fast</span>
+                                    <p class="description-grp">Et ici on mettra une description pour le groupe Something fast.</p>
+                                </td>
+                                <td><a href="#"><button class="btn btn-primary btn-click">Voir</button></a> <a href="#"><button class="btn btn-warning btn-click">Administrer</button></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- card -->
+                </div><!-- col-lg-8 -->
+                <div class="col-lg-4 mg-t-30 mg-lg-t-0">
+                    <div class="card pd-20 pd-xs-30 shadow-base bd-0 mg-t-30">
+                        <h6 class="tx-gray-800 tx-uppercase tx-semibold tx-14 mg-b-30">Options</h6>
+                        <div class="row row-xs mg-b-15">
+                            <a class="btn btn-success col-12 btn-space" data-toggle="modal" data-target="#modaldemo3" style="cursor: hand;color: white;">Créer un groupe</a>
+                            <hr/>
+                            <button class="btn btn-warning col-12" style="cursor: hand">Rejoindre un groupe</button>
+                        </div><!-- row -->
+                        <div class="d-flex alig-items-center justify-content-between">
+                            <h6 class="tx-inverse tx-14 mg-b-0">Groupes suggérés</h6>
+                            <span class="tx-12">X Groupes</span>
+                        </div><!-- d-flex -->
+
+                        <hr />
+
+                        <div class="row row-xs mg-b-15">
+                            <div class="col"><img src="../img/img36.jpg" class="img-fluid" alt="" /></div>
+                            <div class="col"><img src="../img/img37.jpg" class="img-fluid" alt="" /></div>
+                            <div class="col">
+                                <div class="overlay">
+                                    <img src="../img/img38.jpg" class="img-fluid" alt="" />
+                                    <div class="overlay-body bg-black-5 d-flex align-items-center justify-content-center">
+                                        <span class="tx-white tx-12">20+ more</span>
+                                    </div><!-- overlay-body -->
+                                </div><!-- overlay -->
+                            </div>
+                        </div><!-- row -->
+                        <div class="row row-xs mg-b-15">
+                            <div class="col"><img src="../../../via.placeholder.com/300x300/0866C6/FFF" class="img-fluid" alt="" /></div>
+                            <div class="col"><img src="../../../via.placeholder.com/300x300/DC3545/FFF" class="img-fluid" alt="" /></div>
+                            <div class="col">
+                                <div class="overlay">
+                                    <img src="../../../via.placeholder.com/300x300/0866C6/FFF" class="img-fluid" alt="" />
+                                    <div class="overlay-body bg-black-5 d-flex align-items-center justify-content-center">
+                                        <span class="tx-white tx-12">20+ more</span>
+                                    </div><!-- overlay-body -->
+                                </div><!-- overlay -->
+                            </div>
+                        </div><!-- row -->
+
+                    </div><!-- card -->
+                </div><!-- col-lg-4 -->
+            </div><!-- row -->
+        </div><!-- tab-pane -->
+    </div>
+</div>
+
+<div id="modaldemo3" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content tx-size-sm">
+            <div class="modal-header pd-x-20">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Création de groupe</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pd-20">
+                <div id="wizard6" class="mg-t-80 wizard wizard-style-2">
+                    <h3>Personal Information</h3>
+                    <section>
+                        <p>Try the keyboard navigation by clicking arrow left or right!</p>
+                    </section>
+                    <h3>Billing Information</h3>
+                    <section>
+                        <p>Wonderful transition effects.</p>
+                    </section>
+                    <h3>Payment Details</h3>
+                    <section>
+                        <p>The next and previous buttons help you to navigate through your content.</p>
+                    </section>
+                </div>
+
+            </div><!-- modal-body -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary tx-size-xs" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+
+</body>
+{% include 'common/footer.html.twig' %}
+
+<script>
+    $('#wizard6').steps({
+        headerTag: 'h3',
+        bodyTag: 'section',
+        autoFocus: true,
+        titleTemplate: '<span class="number">#index#</span> <span class="title">#title#</span>',
+        cssClass: 'wizard wizard-style-2'
+    });
+</script>
