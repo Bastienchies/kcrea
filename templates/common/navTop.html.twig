@@ -4,7 +4,7 @@
     <div class="br-header-left">
         <div class="navicon-left hidden-md-down"><a id="btnLeftMenu" href="./index.html"><i class="icon ion-navicon-round"></i></a></div>
         <div class="navicon-left hidden-lg-up"><a id="btnLeftMenuMobile" href="./index.html"><i class="icon ion-navicon-round"></i></a></div>
-        <div class="input-group hidden-xs-down wd-170 transition">
+        <div class="input-group hidden-xs-down wd-200 transition">
             <input id="searchbox" type="text" class="form-control" placeholder="Search" />
             <span class="input-group-btn">
             <button class="btn btn-secondary" type="button"><i class="fa fa-search"></i></button>
@@ -143,30 +143,22 @@
             </div><!-- dropdown -->
             <div class="dropdown">
                 <a href="./profile" class="nav-link nav-link-profile" data-toggle="dropdown">
-                    <span class="logged-name hidden-md-down">{{ session.prenom }}</span>
-                    <img src="{{ asset('img/avatars/' ~ session.avatar) }}" class="wd-32 rounded-circle" alt="" />
+                    <span class="logged-name hidden-md-down">{# session.prenom #}</span>
+                    <img src="{# asset('img/avatars/' ~ session.avatar) #}" class="wd-32 rounded-circle" alt="" />
                     <span class="square-10 bg-success"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-header wd-250">
                     <div class="tx-center">
-                        <a href="./profile"><img src="{{ asset('img/avatars/' ~ session.avatar) }}" class="wd-80 rounded-circle" alt="" /></a>
-                        <h6 class="mg-t-15 mg-b-5 tx-gray-800">{{ session.prenom }} {{ session.nom }}</h6>
-                        <p class="tx-12 tx-gray-600">{{ session.email }}</p>
-                    </div>
-                    <hr />
-                    <div class="tx-center">
-                        <span class="d-block mg-b-5 tx-11 tx-spacing-1 tx-uppercase tx-info tx-medium">Earnings After Taxes</span>
-                        <h3 class="mg-b-0 tx-gray-800">$13,230 <i class="icon ion-ios-arrow-thin-up tx-success"></i></h3>
-                        <span class="tx-11 tx-gray-500">Based on list price.</span>
+                        <a href="./profile"><img src="{# asset('img/avatars/' ~ session.avatar) #}" class="wd-80 rounded-circle" alt="" /></a>
+                        <h6 class="mg-t-15 mg-b-5 tx-gray-800">{# session.prenom }} {{ session.nom #}</h6>
+                        <p class="tx-12 tx-gray-600">{# session.email #}</p>
                     </div>
                     <hr />
                     <ul class="list-unstyled user-profile-nav">
-                        <li><a href="./index.html"><i class="icon ion-ios-person"></i> Edit Profile</a></li>
-                        <li><a href="./index.html"><i class="icon ion-ios-gear"></i> Settings</a></li>
+                        <li><a href="./mediatheque"><i class="icon ion-android-film"></i> Ma mediathèque</a></li>
                         <li><a href="./groups"><i class="icon ion-person-stalker"></i> Groupes</a></li>
-                        <li><a href="./index.html"><i class="icon ion-ios-download"></i> Downloads</a></li>
-                        <li><a href="./index.html"><i class="icon ion-ios-star"></i> Favorites</a></li>
-                        <li><a href="./index.html"><i class="icon ion-ios-folder"></i> Collections</a></li>
+                        <li><a href="./index.html"><i class="icon ion-ios-person"></i> Editer mon Profile</a></li>
+                        <li><a href="./index.html"><i class="icon ion-ios-gear"></i> Paramètres</a></li>
                         <li><a href="./logout"><i class="icon ion-power"></i> Déconnexion</a></li>
                     </ul>
                 </div><!-- dropdown-menu -->

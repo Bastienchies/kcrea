@@ -1,0 +1,118 @@
+<body>
+{% include 'common/navLeft.html.twig' %}
+{% include 'common/navTop.html.twig' %}
+
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<link href="{{ asset('css/api_mediaStyle.css') }}" rel="stylesheet" />
+
+<div class="br-mainpanel">
+        <div class="row">
+            <div id="poster">
+                <img src="{{ poster }}"/>
+            </div>
+            <div id="titre_note">
+                <h1>
+                    {{ titre }}<br>
+                    <div id="rating">
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                    </div>
+                </h1>
+
+                <br>
+
+                <b>Année de sortie :</b> {{ year }}
+                <br><br>
+                <b>Age minimum conseillé :</b> {{ pegi }}
+                <br><br>
+                <b>Realisation :</b> {{ realisation }}
+                <br><br>
+                <b>Durée :</b> {{ duree }}
+                <br><br>
+                <b>Genre(s) :</b> {{ genre }}
+                <br><br>
+                <b>Pays :</b> {{ pays }}
+            </div>
+        </div>
+        <br>
+        <div id="synopsis">
+            <h6><b>Synopsis :</b></h6> {{ intrigue }}
+        </div>
+        <div id="realisateur_info">
+            <h6><b>Realisateur(s) :</b></h6> {{ realisateur }}
+        </div>
+        <div id="scenariste_info">
+            <h6><b>Scenariste(s) :</b></h6> {{ scenariste }}
+        </div>
+        <div id="acteur_info">
+            <h6><b>Acteur(s) :</b></h6> {{ acteur }}
+        </div>
+        <div id="langue_info">
+            <h6><b>Langue(s) :</b></h6> {{ langue }}
+        </div>
+    </div>
+
+<script src="{{ asset('lib/jquery/jquery.js') }}"></script>
+</body>
+{% include 'common/footer.html.twig' %}
+
+<script type="text/javascript">
+    /**
+     * Star rating class
+     * @constructor
+     */
+    function StarRating() {
+        this.init();
+    };
+
+    /**
+     * Initialize
+     */
+    StarRating.prototype.init = function() {
+        this.stars = document.querySelectorAll('#rating span');
+        for (var i = 0; i < this.stars.length; i++) {
+            this.stars[i].setAttribute('data-count', i);
+            this.stars[i].addEventListener('mouseenter', this.enterStarListener.bind(this));
+        }
+        document.querySelector('#rating').addEventListener('mouseleave', this.leaveStarListener.bind(this));
+    };
+
+    /**
+     * This method is fired when a user hovers over a single star
+     * @param e
+     */
+    StarRating.prototype.enterStarListener = function(e) {
+        this.fillStarsUpToElement(e.target);
+    };
+
+    /**
+     * This method is fired when the user leaves the #rating element, effectively removing all hover states.
+     */
+    StarRating.prototype.leaveStarListener = function() {
+        this.fillStarsUpToElement(null);
+    };
+
+    /**
+     * Fill the star ratings up to a specific position.
+     * @param el
+     */
+    StarRating.prototype.fillStarsUpToElement = function(el) {
+        // Remove all hover states:
+        for (var i = 0; i < this.stars.length; i++) {
+            if (el == null || this.stars[i].getAttribute('data-count') > el.getAttribute('data-count')) {
+                this.stars[i].classList.remove('hover');
+            } else {
+                this.stars[i].classList.add('hover');
+            }
+        }
+    };
+
+    // Run:
+    new StarRating();
+</script>
