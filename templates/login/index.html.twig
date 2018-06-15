@@ -54,7 +54,8 @@
             <div class="form-group">
                 {{ form_widget(form.password_utilisateur) }}
                 {{ form_errors(form.password_utilisateur) }}
-                <a href="./signin-img.html" class="tx-info tx-12 d-block mg-t-10">Mot de passe oublié ?</a>
+                <!--<a href="./signin-img.html" class="tx-info tx-12 d-block mg-t-10">Mot de passe oublié ?</a>-->
+                <a href="#" class="tx-info tx-12 d-block mg-t-10" data-toggle="modal" data-target="#modaldemo2">Mot de passe oublié ?</a>
             </div><!-- form-group -->
             {{ form_widget(form.connexion) }}
             {{ form_end(form) }}
@@ -62,6 +63,28 @@
         </div><!-- login-wrapper -->
     </div><!-- overlay-body -->
 </div><!-- d-flex -->
+
+<div id="modaldemo2" class="modal fade">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content bd-0 tx-14">
+            <div class="modal-header pd-x-20">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Mot de passe oublié</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {{ form_start(formPwd) }}
+            <div class="modal-body pd-20">
+                {{ form_widget(formPwd.email_forgot) }}
+            </div>
+            <div class="modal-footer justify-content-center">
+                {{ form_widget(formPwd.email_send) }}
+                <button type="button" class="btn btn-secondary tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium" data-dismiss="modal">Close</button>
+            </div>
+            {{ form_end(formPwd) }}
+        </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
 
 <script src="{{ asset('lib/jquery/jquery.js') }}"></script>
 <script src="{{ asset('lib/popper.js/popper.js') }}"></script>
