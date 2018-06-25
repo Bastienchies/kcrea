@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Role\Role;
 
 class LoginController extends Controller
 {
@@ -60,21 +61,28 @@ class LoginController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $credentials = $form->getData();
             $hashedpass = hash('sha256',$credentials['password_utilisateur']);
-            $repository = $this->getDoctrine()->getRepository(Utilisateur::class);
-
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository(Utilisateur::class);
+            $role = new Role('ROLE_USER');
             if($repository != null) {
                 //echo 'cas 1';
                 $utilisateur = $repository->findOneBy([
                     'email_utilisateur' => $credentials['email_utilisateur'],
                     'password_utilisateur' => $hashedpass,
                 ]);
+                $utilisateur->setRoles("ROLE_USER");
+                //$utilisateur->setRoles($role);
+                $em->persist($utilisateur);
+                $em->flush();
                 if($utilisateur != null) {
                     $session = new Session();
                     $session->set('nom', $utilisateur->getNomUtilisateur());
                     $session->set('prenom', $utilisateur->getPrenomUtilisateur());
                     $session->set('email', $utilisateur->getEmailUtilisateur());
                     $session->set('avatar', $utilisateur->getAvatarUtilisateur());
-                    return $this->redirectToRoute('home');
+
+                    var_dump($role->getRole());
+                    //return $this->redirectToRoute('home');
                 }
             }
             else
@@ -129,6 +137,11 @@ class LoginController extends Controller
 
         // Send the message
         $result = $mailer->send($message);
+
+    }
+
+    public function checkLogin()
+    {
 
     }
 }

@@ -7,7 +7,7 @@ login:
     controller: App\Controller\LoginController::index
 
 home:
-    path: /home
+    path: /
     controller: App\Controller\HomeController::index
 
 profile:
@@ -21,3 +21,7 @@ groups:
 create_group:
     path: /create_groupe
     controller: App\Controller\CreateGroupController::index
+
+api_media:
+    path: /apimedia
+    controller: App\Controller\ApiMediaController::index
