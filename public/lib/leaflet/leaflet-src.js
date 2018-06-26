@@ -6806,7 +6806,7 @@ var FeatureGroup = LayerGroup.extend({
 	},
 
 	// @method getBounds(): LatLngBounds
-	// Returns the LatLngBounds of the Feature Group (created from bounds and coordinates of its children).
+	// Returns the LatLngBounds of the Feature Groupe (created from bounds and coordinates of its children).
 	getBounds: function () {
 		var bounds = new LatLngBounds();
 
