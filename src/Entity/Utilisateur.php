@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,6 +42,14 @@ class Utilisateur
      * @ORM\Column(type="string", length=255)
      */
     private $avatar_utilisateur;
+
+
+    public function __construct()
+    {
+        $this->id_groupe = new ArrayCollection();
+        $this->id_typeuser = new ArrayCollection();
+    }
+
 
     public function getId()
     {
