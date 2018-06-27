@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Groupe;
+use App\Entity\CompoGroupe;
+use App\Entity\GroupeUtilisateur;
+use App\Entity\TypeUtilisateurGroupe;
+use App\Entity\Utilisateur;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -23,7 +26,9 @@ class GroupsController extends Controller
     {
         $request->getSession()->getFlashBag()->clear();
 
-        $unGroupe = new Groupe();
+        $unGroupe = new GroupeUtilisateur();
+        $unGroupeCompo = new CompoGroupe();
+
 
         $form = $this->createFormBuilder($unGroupe)
             ->add('nom_groupe', TextType::class, [
@@ -39,6 +44,8 @@ class GroupsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $session = new Session();
+
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
             $unGroupe= $form->getData();
@@ -47,38 +54,69 @@ class GroupsController extends Controller
             $entityManager->persist($unGroupe);
             $entityManager->flush();
 
+            $unGroupeCompo->setIdTypeuser(1);
+            $unGroupeCompo->setIdGroupe($unGroupe->getId());
+            $unGroupeCompo->setIdUtilisateur($session->get("id"));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($unGroupeCompo);
+            $entityManager->flush();
+
 
             $request->getSession()->getFlashBag()
                 ->add('success-register-name', $unGroupe->getNomGroupe() );
             //return $this->redirectToRoute('task_success');
         }
 
+        $groupes = $this->listeGroupe();
 
+        foreach ($groupes AS $groupe ) {
+            $id = $groupe->getIdGroupe();
+            $mesgroupe = $this->mesGroupe($id);
 
+        }
 
         return $this->render('groups/index.html.twig', [
-            'form' => $form->createView(),
-            'controller_name' => 'GroupsController',
-            'session'   => $_SESSION['_sf2_attributes'],
+            'form' =>$form->createView(),
+            'mesgroupe' => $mesgroupe
         ]);
     }
 
+
+
     public function listeGroupe()
     {
+        $session = new Session();
+        $idUser = $session->get("id");
         $groupe = $this->getDoctrine()
-            ->getRepository(Groupe::Class)
-            ->findAll();
+            ->getRepository(CompoGroupe::Class)
+            ->findBy(array("id_utilisateur"=>$idUser));
 
         if (!$groupe) {
-            throw $this->createNotFoundException(
-                'aucun groupe trouvé'
-            );
+
+             $groupe =  'aucun groupe pour le moment';
+
         }
-        return $this->render("groups/index.html.twig", array(
-            'groupe' => $groupe,
-        ));
+        return $groupe;
 
     }
+
+    public function mesGroupe($id)
+    {
+
+        $mesgroupe = $this->getDoctrine()
+            ->getRepository(GroupeUtilisateur::Class)
+            ->findBy(array("id"=>$id));
+
+        if (!$mesgroupe) {
+
+            $mesgroupe =  'aucun groupe pour le moment';
+
+        }
+        return $mesgroupe;
+
+    }
+
+
 
     public function formGroup() {
 

@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -10,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Role\Role;
 
 class LoginController extends Controller
 {
@@ -40,24 +44,46 @@ class LoginController extends Controller
 
         $form->handleRequest($request);
 
+        //POUR L'OUBLIE DE MOT DE PASSE
+        $formPwd = $this->createFormBuilder()
+            ->add('email_forgot', EmailType::class, [
+                'attr' => ['class' => 'form-control','name' => 'mail','placeholder' => 'Adresse mail'],
+                'required' => 'true',
+            ])
+            ->add('email_send', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium','name' => 'emailSend','type'=>'submit', 'value' => 'Envoyer'],
+            ])
+            ->getForm();
+
+        $formPwd->handleRequest($request);
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $credentials = $form->getData();
             $hashedpass = hash('sha256',$credentials['password_utilisateur']);
-            $repository = $this->getDoctrine()->getRepository(Utilisateur::class);
-
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository(Utilisateur::class);
+            $role = new Role('ROLE_USER');
             if($repository != null) {
                 //echo 'cas 1';
                 $utilisateur = $repository->findOneBy([
                     'email_utilisateur' => $credentials['email_utilisateur'],
                     'password_utilisateur' => $hashedpass,
                 ]);
+                $utilisateur->setRoles("ROLE_USER");
+                //$utilisateur->setRoles($role);
+                $em->persist($utilisateur);
+                $em->flush();
                 if($utilisateur != null) {
                     $session = new Session();
+                    $session->set('id', $utilisateur->getId());
                     $session->set('nom', $utilisateur->getNomUtilisateur());
                     $session->set('prenom', $utilisateur->getPrenomUtilisateur());
                     $session->set('email', $utilisateur->getEmailUtilisateur());
                     $session->set('avatar', $utilisateur->getAvatarUtilisateur());
-                    return $this->redirectToRoute('home');
+
+                    var_dump($role->getRole());
+                    //return $this->redirectToRoute('home');
                 }
             }
             else
@@ -69,8 +95,54 @@ class LoginController extends Controller
             }
         }
 
+        //POUR L'OUBLIE DE MOT DE PASSE
+        if ($formPwd->isSubmitted() && $formPwd->isValid())
+        {
+            $mail = $formPwd->getData();
+            var_dump($mail);
+            $this->sendMail($mail['email_forgot']);
+        }
+        else
+        {
+            return $this->render('login/index.html.twig',array(
+                'form' => $form->createView(),
+                'formPwd' => $formPwd->createView(),
+                'errorMessage' => 'Adresse mail invalide.'
+            ));
+        }
+
+
         return $this->render('login/index.html.twig',array(
             'form' => $form->createView(),
+            'formPwd' => $formPwd->createView(),
         ));
+    }
+
+    public function sendMail($mailto)
+    {
+        // Create the Transport
+        $transport = (new Swift_SmtpTransport('smtp.vivaldi.net', 587, 'tls'))
+            ->setUsername('mytek')
+            ->setPassword('epsijdoe123')
+        ;
+
+        // Create the Mailer using your created Transport
+        $mailer = new Swift_Mailer($transport);
+
+        // Create a message
+        $message = (new Swift_Message('Réinitialisation de mot de passe.'))
+            ->setFrom(['mytek@vivaldi.net' => 'MyTek'])
+            ->setTo([$mailto, 'other@domain.org' => 'A name'])
+            ->setBody('Here is the message itself')
+        ;
+
+        // Send the message
+        $result = $mailer->send($message);
+
+    }
+
+    public function checkLogin()
+    {
+
     }
 }

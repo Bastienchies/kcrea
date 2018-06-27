@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  */
-class Utilisateur
+
+class Utilisateur implements UserInterface
 {
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -41,6 +45,9 @@ class Utilisateur
      */
     private $avatar_utilisateur;
 
+    /** @ORM\Column(type="json") */
+    private $roles = [];
+
     public function getId()
     {
         return $this->id;
@@ -49,6 +56,24 @@ class Utilisateur
     public function getNomUtilisateur(): ?string
     {
         return $this->nom_utilisateur;
+    }
+
+    public function getRoles(): array
+    {
+        if($this->roles != null)
+            return array_unique(array_merge(['ROLE_USER'], $this->roles));
+        else
+            return array_unique(['ROLE_USER']);
+    }
+
+    public function setRoles(string $roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function resetRoles()
+    {
+        $this->roles = [];
     }
 
     public function setNomUtilisateur(string $nom_utilisateur): self
@@ -105,4 +130,27 @@ class Utilisateur
 
         return $this;
     }
+
+    //
+    public function getPassword()
+    {
+        // TODO: Implement getPassword() method.
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+
 }
