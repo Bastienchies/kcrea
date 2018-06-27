@@ -23,5 +23,5 @@ create_group:
     controller: App\Controller\CreateGroupController::index
 
 api_media:
-    path: /apimedia
+    path: /api_media
     controller: App\Controller\ApiMediaController::index

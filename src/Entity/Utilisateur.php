@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -45,8 +47,12 @@ class Utilisateur implements UserInterface
      */
     private $avatar_utilisateur;
 
-    /** @ORM\Column(type="json") */
-    private $roles = [];
+
+    public function __construct()
+    {
+        $this->id_groupe = new ArrayCollection();
+        $this->id_typeuser = new ArrayCollection();
+    }
 
     public function getId()
     {
