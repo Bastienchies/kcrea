@@ -7,7 +7,7 @@ login:
     controller: App\Controller\LoginController::index
 
 home:
-    path: /home
+    path: /
     controller: App\Controller\HomeController::index
 
 profile:

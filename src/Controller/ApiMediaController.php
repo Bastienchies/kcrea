@@ -67,6 +67,20 @@ class ApiMediaController extends Controller
             'langue' => $langue[0],
             'pays' => $pays[0],
             'poster' => $poster[0],
+            'session'   => $_SESSION['_sf2_attributes']
+        ]);
+
+    }
+
+    public function search(string $nomFilm)
+    {
+        Imdb::setApiKey("1748ba92");
+
+        $movie[] = Imdb::search($nomFilm);
+        return $this->render('api_media/index.html.twig', [
+            'controller_name' => 'ApiMediaController',
+            'films' => $movie,
+            'session'   => $_SESSION['_sf2_attributes']
         ]);
 
     }
