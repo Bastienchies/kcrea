@@ -6,6 +6,7 @@ use App\Entity\CompoGroupe;
 use App\Entity\GroupeUtilisateur;
 use App\Entity\TypeUtilisateurGroupe;
 use App\Entity\Utilisateur;
+use function PHPSTORM_META\type;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -22,12 +23,16 @@ class GroupsController extends Controller
     /**
      * @Route("/groups", name="groups")
      */
+
+
     public function index(Request $request)
     {
+
         $request->getSession()->getFlashBag()->clear();
 
         $unGroupe = new GroupeUtilisateur();
         $unGroupeCompo = new CompoGroupe();
+
 
 
         $form = $this->createFormBuilder($unGroupe)
@@ -41,6 +46,8 @@ class GroupsController extends Controller
             ->getForm();
 
         $form->handleRequest($request);
+
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -65,6 +72,20 @@ class GroupsController extends Controller
             $request->getSession()->getFlashBag()
                 ->add('success-register-name', $unGroupe->getNomGroupe() );
             //return $this->redirectToRoute('task_success');
+
+
+        }
+
+        if (isset($_POST['id'])) {
+
+            $session = new Session();
+
+            $unGroupeCompo->setIdTypeuser(2);
+            $unGroupeCompo->setIdGroupe($_POST['id']);
+            $unGroupeCompo->setIdUtilisateur($session->get("id"));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($unGroupeCompo);
+            $entityManager->flush();
         }
 
         $groupes = $this->listeGroupe();
@@ -75,9 +96,14 @@ class GroupsController extends Controller
 
         }
 
+        var_dump($mesgroupe);
+
+        $toutlesgroupe = $this->listAllGroup();
+
         return $this->render('groups/index.html.twig', [
             'form' =>$form->createView(),
-            'mesgroupe' => $mesgroupe
+            'mesgroupe' => $mesgroupe,
+            'lesGroupes' => $toutlesgroupe
         ]);
     }
 
@@ -118,7 +144,16 @@ class GroupsController extends Controller
 
 
 
-    public function formGroup() {
+    public function listAllGroup() {
+        $lesgroupes = $this->getDoctrine()
+            ->getRepository(GroupeUtilisateur::Class)
+            ->findAll();
 
+        if (!$lesgroupes) {
+
+            $lesgroupes =  'aucun groupe pour le moment';
+
+        }
+        return $lesgroupes;
     }
 }
