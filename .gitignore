@@ -3,13 +3,13 @@
 /.env
 /public/bundles/
 /var/
-/vendor/
 ###< symfony/framework-bundle ###
 
 ###> symfony/webpack-encore-pack ###
 /node_modules/
 /public/build/
 /.idea/
+/.idea/workspace.xml
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-pack ###
