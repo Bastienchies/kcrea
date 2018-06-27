@@ -55,11 +55,29 @@ class GroupsController extends Controller
 
 
 
+
         return $this->render('groups/index.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'GroupsController',
             'session'   => $_SESSION['_sf2_attributes'],
         ]);
+    }
+
+    public function listeGroupe()
+    {
+        $groupe = $this->getDoctrine()
+            ->getRepository(Groupe::Class)
+            ->findAll();
+
+        if (!$groupe) {
+            throw $this->createNotFoundException(
+                'aucun groupe trouvé'
+            );
+        }
+        return $this->render("groups/index.html.twig", array(
+            'groupe' => $groupe,
+        ));
+
     }
 
     public function formGroup() {
