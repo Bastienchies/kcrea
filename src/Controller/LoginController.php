@@ -79,6 +79,7 @@ class LoginController extends Controller
                     $session->set('nom', $utilisateur->getNomUtilisateur());
                     $session->set('prenom', $utilisateur->getPrenomUtilisateur());
                     $session->set('email', $utilisateur->getEmailUtilisateur());
+                    $session->set('id',$utilisateur->getId());
                     $session->set('avatar', $utilisateur->getAvatarUtilisateur());
 
                     var_dump($role->getRole());

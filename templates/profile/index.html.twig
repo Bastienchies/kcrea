@@ -1,5 +1,14 @@
 {% include 'common/navLeft.html.twig' %}
 {% include 'common/navTop.html.twig' %}
+{% include 'common/assetsInclude.html.twig' %}
+<link href="{{ asset('lib/highlightjs/github.css')}}" rel="stylesheet">
+<link href="{{ asset('lib/select2/css/select2.min.css') }}" rel="stylesheet">
+<link href="{{ asset('lib/jquery-toggles/toggles-full.css')}}" rel="stylesheet">
+<link href="{{ asset('lib/jt.timepicker/jquery.timepicker.css')}}" rel="stylesheet">
+<link href="{{ asset('lib/spectrum/spectrum.css')}}" rel="stylesheet">
+<link href="{{ asset('lib/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet">
+<link href="{{ asset('lib/ion.rangeSlider/css/ion.rangeSlider.css')}}" rel="stylesheet">
+<link href="{{ asset('lib/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css')}}" rel="stylesheet">
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
@@ -513,11 +522,27 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="card pd-20 pd-xs-30 shadow-base bd-0 mg-t-30">
-                            <h6 class="tx-gray-800 tx-uppercase tx-semibold tx-14 mg-b-30">Recent Photos</h6>
-                            <label class="custom-file">
-                                <input type="file" id="file" class="custom-file-input" placeholder="test">
-                                <span class="custom-file-control"></span>
-                            </label>
+                            <h6 class="tx-gray-800 tx-uppercase tx-semibold tx-14 mg-b-30">Mon profil</h6>
+
+                            <div class="col-12">
+                                <h7>Médiathèque publique</h7>
+                                <div class="toggle-wrapper">
+                                    <div class="toggle toggle-light primary" id="authorize-public"></div>
+                                </div>
+                            </div>
+                            <h8>Avatar</h8>
+                            {{ form_start(formAvatar) }}
+                            <div class="form-group">
+                            {{ form_widget(formAvatar.avatar_utilisateur) }}
+                            </div>
+                            <div id="preview-avatar" class="form-group">
+                                <p>Preview:</p>
+                                <img src="#" id="preview-image" style="width: 100px;height: 100px;"/>
+                            </div>
+                            <div class="form-group">
+                            {{ form_widget(formAvatar.valider) }}
+                            </div>
+                            {{ form_end(formAvatar) }}
                         </div><!-- card -->
                     </div><!-- col-lg-8 -->
                     <div class="col-lg-4 mg-t-30 mg-lg-t-0">
@@ -588,3 +613,124 @@
     </div><!-- br-mainpanel -->
     <!-- ########## END: MAIN PANEL ########## -->
 {% include 'common/footer.html.twig' %}
+<script src="{{ asset('lib/highlightjs/highlight.pack.js')}}"></script>
+<script src="{{ asset('lib/select2/js/select2.min.js')}}"></script>
+<script src="{{ asset('lib/jquery-toggles/toggles.min.js')}}"></script>
+<script src="{{ asset('lib/jt.timepicker/jquery.timepicker.js')}}"></script>
+<script src="{{ asset('lib/spectrum/spectrum.js')}}"></script>
+<script src="{{ asset('lib/jquery.maskedinput/jquery.maskedinput.js')}}"></script>
+<script src="{{ asset('lib/bootstrap-tagsinput/bootstrap-tagsinput.js')}}"></script>
+<script src="{{ asset('lib/ion.rangeSlider/js/ion.rangeSlider.min.js')}}"></script>
+
+<script>
+
+    $(window).load(function() {
+        $("#preview-avatar").hide();
+    });
+
+    document.getElementsByClassName("active")[3].innerHTML;
+
+    function previewAvatar(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#preview-image').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+            $("#preview-avatar").show();
+        }
+    }
+
+
+    $(function(){
+        'use strict'
+
+        // Toggles
+        $('.toggle').toggles({
+            on: true,
+            height: 26
+        });
+
+        // Input Masks
+        $('#dateMask').mask('99/99/9999');
+        $('#phoneMask').mask('(999) 999-9999');
+        $('#ssnMask').mask('999-99-9999');
+
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+
+        $('#datepickerNoOfMonths').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            numberOfMonths: 2
+        });
+
+        // Time Picker
+        $('#tpBasic').timepicker();
+        $('#tp2').timepicker({'scrollDefault': 'now'});
+        $('#tp3').timepicker();
+
+        $('#setTimeButton').on('click', function (){
+            $('#tp3').timepicker('setTime', new Date());
+        });
+
+        // Color picker
+        $('#colorpicker').spectrum({
+            color: '#17A2B8'
+        });
+
+        $('#showAlpha').spectrum({
+            color: 'rgba(23,162,184,0.5)',
+            showAlpha: true
+        });
+
+        $('#showPaletteOnly').spectrum({
+            showPaletteOnly: true,
+            showPalette:true,
+            color: '#DC3545',
+            palette: [
+                ['#1D2939', '#fff', '#0866C6','#23BF08', '#F49917'],
+                ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+            ]
+        });
+
+
+        // Rangeslider
+        if($().ionRangeSlider) {
+            $('#rangeslider1').ionRangeSlider();
+
+            $('#rangeslider2').ionRangeSlider({
+                min: 100,
+                max: 1000,
+                from: 550
+            });
+
+            $('#rangeslider3').ionRangeSlider({
+                type: 'double',
+                grid: true,
+                min: 0,
+                max: 1000,
+                from: 200,
+                to: 800,
+                prefix: '$'
+            });
+
+            $('#rangeslider4').ionRangeSlider({
+                type: 'double',
+                grid: true,
+                min: -1000,
+                max: 1000,
+                from: -500,
+                to: 500,
+                step: 250
+            });
+        }
+
+    });
+</script>
