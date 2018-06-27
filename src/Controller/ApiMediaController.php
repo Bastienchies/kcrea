@@ -22,7 +22,7 @@ class ApiMediaController extends Controller
 
         $film = new Film;
 
-        $movie[] = Imdb::retrieve('deadpool');
+        $movie[] = Imdb::retrieve('deadpool 2');
         $film->setTitre(array_column($movie,'title'));
         $film->setYear(array_column($movie,'year'));
         $film->setPegi(array_column($movie,'rated'));
@@ -53,7 +53,7 @@ class ApiMediaController extends Controller
 
         return $this->render('api_media/index.html.twig', [
             'controller_name' => 'ApiMediaController',
-            //'session'   => $_SESSION['_sf2_attributes'],
+            'session'   => $_SESSION['_sf2_attributes'],
             'titre' => $titre[0],
             'year' => $year[0],
             'pegi' => $pegi[0],
