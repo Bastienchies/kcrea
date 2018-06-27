@@ -14,7 +14,6 @@ class GroupsController extends Controller
     {
         return $this->render('groups/index.html.twig', [
             'controller_name' => 'GroupsController',
-            'session'   => $_SESSION['_sf2_attributes'],
         ]);
     }
 }

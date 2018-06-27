@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,7 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
+
 
         $formAvatar = $this->createFormBuilder()
             ->add('avatar_utilisateur', FileType::class, [
@@ -34,7 +36,6 @@ class ProfileController extends Controller
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
-            'session'   => $_SESSION['_sf2_attributes'],
             'formAvatar' => $formAvatar->createView(),
         ]);
     }

@@ -3,6 +3,11 @@
 /.env
 /public/bundles/
 /var/
+<<<<<<< HEAD
+=======
+/vendor/
+
+>>>>>>> aa00a7ca6af7cabc1df425f87ac0c4299e4fcade
 ###< symfony/framework-bundle ###
 
 ###> symfony/webpack-encore-pack ###
@@ -21,4 +26,9 @@ yarn-error.log
 
 ###> symfony/web-server-bundle ###
 /.web-server-pid
+<<<<<<< HEAD
 ###< symfony/web-server-bundle ###
+=======
+###< symfony/web-server-bundle ###
+
+>>>>>>> aa00a7ca6af7cabc1df425f87ac0c4299e4fcade
