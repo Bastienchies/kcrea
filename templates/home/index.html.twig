@@ -8,7 +8,18 @@
 </style>
 
 <div class="br-mainpanel">
-    <div class="d-sm-flex align-items-center pd-y-20 pd-x-30 bg-gray-200">
+    <div class="container col-lg-12">
+        {% for film in films %}
+            <div class="col-lg-4">
+            <h4>{{ film.titre }}</h4>
+            <img src="{{ film.poster }}"/><br><br>
+            <b>Realisateur : </b>{{ film.realisateur }}<br><br>
+            <b>Genre : </b>{{ film.genre }}<br><br>
+            <b>Synopsis : </b>{{ film.intrigue }}
+            <hr>
+        </div>
+        {%  endfor %}
+
     </div>
 </div>
 </body>

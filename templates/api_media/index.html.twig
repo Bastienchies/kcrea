@@ -1,4 +1,4 @@
-<body>
+<body xmlns:width="http://www.w3.org/1999/xhtml">
 {% include 'common/navLeft.html.twig' %}
 {% include 'common/assetsInclude.html.twig' %}
 {% include 'common/navTop.html.twig' %}
@@ -19,30 +19,61 @@
                         <img src="{{ poster }}"/>
                     </div>
                     <div id="titre_note" class="col-5">
-                        <h1>
-                            {{ titre }}<br>
+                        <form action="{{ id }}" method="post">
+                            <h1>
+                                {{ titre }}<br>
+                            </h1>
+
+                            <br>
+
                             <div id="rating">
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
+                                {% if noteTitre is not defined or avisTitre is not defined or noteTitre == "" or avisTitre == "" %}
+                                        <b>Avis :</b> <input style="font-size: 12px" name="avis" required><br>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="1" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="2" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="3" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="4" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button><br>
+                                {% else %}
+                                    <b>Avis :</b> <input style="font-size: 12px" name="avis" value="{{ avisTitre }}" required><br>
+                                    {% for i in 1..noteTitre %}
+                                        <button id="btnNote" name="note" value="{{ loop.index }}" type="submit"><span>★</span></button>
+                                        {% endfor %}
+                                    {% if noteTitre == 1 %}
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="2" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="3" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="4" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button>
+                                    {% endif %}
+                                    {% if noteTitre == 2 %}
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="3" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="4" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button>
+                                    {% endif %}
+                                    {% if noteTitre == 3 %}
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="4" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button>
+                                    {% endif %}
+                                    {% if noteTitre == 4 %}
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button>
+                                    {% endif %}
+                                {% endif %}
                             </div>
-                        </h1>
 
-                        <br>
+                            <br>
 
-                        <b>Année de sortie :</b> {{ year }}
-                        <br><br>
-                        <b>Age minimum conseillé :</b> {{ pegi }}
-                        <br><br>
-                        <b>Realisation :</b> {{ realisation }}
-                        <br><br>
-                        <b>Durée :</b> {{ duree }}
-                        <br><br>
-                        <b>Genre(s) :</b> {{ genre }}
-                        <br><br>
-                        <b>Pays :</b> {{ pays }}
+                            <b>Année de sortie :</b> {{ year }}
+                            <br><br>
+                            <b>Age minimum conseillé :</b> {{ pegi }}
+                            <br><br>
+                            <b>Realisation :</b> {{ realisation }}
+                            <br><br>
+                            <b>Durée :</b> {{ duree }}
+                            <br><br>
+                            <b>Genre(s) :</b> {{ genre }}
+                            <br><br>
+                            <b>Pays :</b> {{ pays }}
+                        </form>
                     </div>
 
                     <div class="col-10" style="margin-top: 2%">

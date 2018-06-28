@@ -22,7 +22,7 @@ class InformationTitre
     private $InfoTitre;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string")
      */
     private $DateSortie;
 
@@ -35,6 +35,11 @@ class InformationTitre
      * @ORM\Column(type="string", length=255)
      */
     private $titre_infotitre;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Poster_link;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Realisateur")
@@ -71,12 +76,12 @@ class InformationTitre
         return $this;
     }
 
-    public function getDateSortie(): ?\DateTimeInterface
+    public function getDateSortie()
     {
         return $this->DateSortie;
     }
 
-    public function setDateSortie(\DateTimeInterface $DateSortie): self
+    public function setDateSortie($DateSortie): self
     {
         $this->DateSortie = $DateSortie;
 
@@ -106,6 +111,24 @@ class InformationTitre
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPosterLink()
+    {
+        return $this->Poster_link;
+    }
+
+    /**
+     * @param mixed $Poster_link
+     */
+    public function setPosterLink($Poster_link): void
+    {
+        $this->Poster_link = $Poster_link;
+    }
+
+
 
     public function getIdRealisateur(): ?Realisateur
     {

@@ -16,8 +16,8 @@ class Film
     private $pegi;
     private $realisation;
     private $duree;
-    private $genre;
-    private $realisateur;
+    private $genres;
+    private $realisateurs;
     private $scenariste;
     private $acteur;
     private $intrigue;
@@ -212,7 +212,9 @@ class Film
      */
     public function getGenre()
     {
-        return $this->genre;
+        foreach ($this->genres as $genre) {
+            return $genre;
+        }
     }
 
     /**
@@ -220,7 +222,7 @@ class Film
      */
     public function setGenre($genre): void
     {
-        $this->genre = $genre;
+        $this->genres[] = $genre;
     }
 
     /**
@@ -228,7 +230,9 @@ class Film
      */
     public function getRealisateur()
     {
-        return $this->realisateur;
+        foreach ($this->realisateurs as $realisateur) {
+            return $realisateur;
+        }
     }
 
     /**
@@ -236,7 +240,7 @@ class Film
      */
     public function setRealisateur($realisateur): void
     {
-        $this->realisateur = $realisateur;
+        $this->realisateurs[] = $realisateur;
     }
 
     /**
@@ -322,7 +326,7 @@ class Film
     /**
      * @return mixed
      */
-    public function getRealisation()
+    public function getRealisation() : ?string
     {
         return $this->realisation;
     }
