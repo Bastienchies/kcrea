@@ -1,4 +1,4 @@
-if ($("#modaldemo4").length === 1){
+/*if ($("#modaldemo4").length === 1){
     $(window).load(function(){
         $('#modaldemo4').modal('show');
     });
@@ -6,4 +6,4 @@ if ($("#modaldemo4").length === 1){
 }
 else {
     console.log('Modal non trouvé');
-}
+}*/
