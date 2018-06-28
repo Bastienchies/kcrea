@@ -1,11 +1,18 @@
 #poster{
     margin-left: 35px;
     margin-top: 25px;
+    display: inline-block;
+}
+
+#poster img
+{
+    border: 1px solid black;
 }
 
 #titre_note{
-    margin-left: 150px;
     margin-top : 25px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 #rating span {
