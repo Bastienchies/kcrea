@@ -96,8 +96,6 @@ class GroupsController extends Controller
 
         }
 
-        var_dump($mesgroupe);
-
         $toutlesgroupe = $this->listAllGroup();
 
         return $this->render('groups/index.html.twig', [
