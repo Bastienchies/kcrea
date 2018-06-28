@@ -70,7 +70,6 @@ class LoginController extends Controller
                     'email_utilisateur' => $credentials['email_utilisateur'],
                     'password_utilisateur' => $hashedpass,
                 ]);
-                $utilisateur->setRoles("ROLE_USER");
                 //$utilisateur->setRoles($role);
                 $em->persist($utilisateur);
                 $em->flush();

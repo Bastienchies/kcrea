@@ -19,7 +19,7 @@ class Realisateur
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Nom_utilisateur;
+    private $Nom_realisateur;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -31,14 +31,14 @@ class Realisateur
         return $this->id;
     }
 
-    public function getNomUtilisateur(): ?string
+    public function getNomRealisateur(): ?string
     {
-        return $this->Nom_utilisateur;
+        return $this->Nom_realisateur;
     }
 
-    public function setNomUtilisateur(string $Nom_utilisateur): self
+    public function setNomRealisateur(string $Nom_realisateur): self
     {
-        $this->Nom_utilisateur = $Nom_utilisateur;
+        $this->Nom_realisateur = $Nom_realisateur;
 
         return $this;
     }

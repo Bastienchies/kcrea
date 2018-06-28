@@ -23,10 +23,5 @@ create_group:
     controller: App\Controller\CreateGroupController::index
 
 api_media:
-<<<<<<< HEAD
   path: /api_media
   controller: App\Controller\ApiMediaController::index
-=======
-    path: /api_media
-    controller: App\Controller\ApiMediaController::index
->>>>>>> aa00a7ca6af7cabc1df425f87ac0c4299e4fcade
