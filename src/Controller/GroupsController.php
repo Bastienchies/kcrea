@@ -90,10 +90,17 @@ class GroupsController extends Controller
 
         $groupes = $this->listeGroupe();
 
-        foreach ($groupes AS $groupe ) {
-            $id = $groupe->getIdGroupe();
-            $mesgroupe = $this->mesGroupe($id);
+        if (!$groupes){
+            $groupes =  'aucun groupe pour le moment';
+        }else {
+            foreach ($groupes AS $groupe) {
+                $id = $groupe->getIdGroupe();
+                $mesgroupe = $this->mesGroupe($id);
 
+
+
+
+            }
         }
 
         $toutlesgroupe = $this->listAllGroup();

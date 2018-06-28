@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Utilisateur;
+use App\form\UtilisateurRegisterType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -26,7 +27,7 @@ class RegisterController extends Controller
 
         $user = new Utilisateur();
 
-        $form = $this->createFormBuilder($user)
+        /*$form = $this->createFormBuilder($user)
             ->add('prenom_utilisateur', TextType::class, [
                 'attr' => ['class' => 'form-control','name' => 'nom','placeholder' => 'Prénom'],
             ])
@@ -48,7 +49,8 @@ class RegisterController extends Controller
             ->add('enregistrement', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-info btn-block','name' => 'password','type'=>'submit', 'value' => 'Enregistrement'],
             ])
-            ->getForm();
+            ->getForm();*/
+        $form = $this->createForm(UtilisateurRegisterType::class, $user);
 
         $form->handleRequest($request);
 
@@ -60,6 +62,7 @@ class RegisterController extends Controller
             $hashedpass = hash('sha256',$user->getPasswordUtilisateur());
             $user->setPasswordUtilisateur($hashedpass);
             $user->setAvatarUtilisateur('default_avatar.jpg');
+            $user->setMediathequeStatusUtilisateur(false);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

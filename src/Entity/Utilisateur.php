@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -9,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  */
 
-class Utilisateur implements UserInterface
+class Utilisateur
 {
 
 
@@ -45,8 +47,17 @@ class Utilisateur implements UserInterface
      */
     private $avatar_utilisateur;
 
-    /** @ORM\Column(type="json") */
-    private $roles = [];
+    /**
+     * @ORM\Column(type="boolean",  options={"default" : 0})
+     */
+    private $mediathequeStatus_utilisateur;
+
+
+    public function __construct()
+    {
+        $this->id_groupe = new ArrayCollection();
+        $this->id_typeuser = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -58,23 +69,6 @@ class Utilisateur implements UserInterface
         return $this->nom_utilisateur;
     }
 
-    public function getRoles(): array
-    {
-        if($this->roles != null)
-            return array_unique(array_merge(['ROLE_USER'], $this->roles));
-        else
-            return array_unique(['ROLE_USER']);
-    }
-
-    public function setRoles(string $roles)
-    {
-        $this->roles = $roles;
-    }
-
-    public function resetRoles()
-    {
-        $this->roles = [];
-    }
 
     public function setNomUtilisateur(string $nom_utilisateur): self
     {
@@ -150,6 +144,18 @@ class Utilisateur implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getMediathequeStatusUtilisateur(): ?bool
+    {
+        return $this->mediathequeStatus_utilisateur;
+    }
+
+    public function setMediathequeStatusUtilisateur(bool $mediathequeStatus_utilisateur): self
+    {
+        $this->mediathequeStatus_utilisateur = $mediathequeStatus_utilisateur;
+
+        return $this;
     }
 
 
