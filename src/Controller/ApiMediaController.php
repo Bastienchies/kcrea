@@ -16,13 +16,13 @@ class ApiMediaController extends Controller
     /**
      * @Route("/api/media", name="api_media")
      */
-    public function index()
+    public function index($id)
     {
         Imdb::setApiKey("1748ba92");
 
         $film = new Film;
 
-        $movie[] = Imdb::retrieve('deadpool');
+        $movie[] = Imdb::retrieve($id);
         $film->setTitre(array_column($movie,'title'));
         $film->setYear(array_column($movie,'year'));
         $film->setPegi(array_column($movie,'rated'));
