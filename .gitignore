@@ -11,6 +11,8 @@
 /node_modules/
 /public/build/
 /.idea/
+/.idea
+.idea
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-pack ###
