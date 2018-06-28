@@ -27,20 +27,37 @@
                             <br>
 
                             <div id="rating">
-                                {% if noteTitre is not defined or noteAvis is not defined %}
-                                        <b>Avis :</b> <input style="font-size: 12px" name="avis"><br>
-                                        <button id="btnNote" name="note" value="1" type="submit"><span>★</span></button>
-                                        <button id="btnNote" name="note" value="2" type="submit"><span>★</span></button>
-                                        <button id="btnNote" name="note" value="3" type="submit"><span>★</span></button>
-                                        <button id="btnNote" name="note" value="4" type="submit"><span>★</span></button>
-                                        <button id="btnNote" name="note" value="5" type="submit"><span>★</span></button><br>
+                                {% if noteTitre is not defined or avisTitre is not defined or noteTitre == "" or avisTitre == "" %}
+                                        <b>Avis :</b> <input style="font-size: 12px" name="avis" required><br>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="1" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="2" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="3" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="4" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button><br>
                                 {% else %}
+                                    <b>Avis :</b> <input style="font-size: 12px" name="avis" value="{{ avisTitre }}" required><br>
                                     {% for i in 1..noteTitre %}
-                                        <button id="btnNote" name="note" value="{{ loop.iteration }}" type="submit"><span>★</span></button>
-                                    {% endfor %}
+                                        <button id="btnNote" name="note" value="{{ loop.index }}" type="submit"><span>★</span></button>
+                                        {% endfor %}
+                                    {% if noteTitre == 1 %}
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="2" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="3" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="4" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button>
+                                    {% endif %}
+                                    {% if noteTitre == 2 %}
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="3" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="4" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button>
+                                    {% endif %}
+                                    {% if noteTitre == 3 %}
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="4" type="submit"><span>★</span></button>
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button>
+                                    {% endif %}
+                                    {% if noteTitre == 4 %}
+                                        <button id="rating" style="background: transparent; border: transparent; outline-style: none;" name="note" value="5" type="submit"><span>★</span></button>
+                                    {% endif %}
                                 {% endif %}
-
-
                             </div>
 
                             <br>

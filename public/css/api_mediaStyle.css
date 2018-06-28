@@ -69,10 +69,14 @@
 }
 
 #btnNote{
+    color: royalblue;
     background: transparent;
     border: transparent;
+    transform: rotateX(0deg);
+    text-shadow: 0 0 30px #ffc;
 }
 
 #btnNote:hover{
     outline-style: none;
 }
+

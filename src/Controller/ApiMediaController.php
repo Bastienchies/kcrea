@@ -8,6 +8,7 @@ use App\Entity\InformationTitre;
 use App\Entity\Realisateur;
 use App\Entity\TitreIdentite;
 use App\Entity\Utilisateur;
+use Doctrine\ORM\Mapping\Entity;
 use Jleagle\Imdb\Imdb;
 use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Component\DependencyInjection\Tests\Compiler\G;
@@ -59,10 +60,12 @@ class ApiMediaController extends Controller
         $pays = $film->getPays();
         $poster = $film->getPoster();
 
+        $titreIdentite = new TitreIdentite();
+        $checknoteTitre = "";
+        $checkavisTitre = "";
+        $session = New session();
 
         if (isset($_POST['note'])) {
-            $titreIdentite = new TitreIdentite();
-
             $em = $this->getDoctrine()->getManager();
             $repoFilm = $em->getRepository(InformationTitre::class);
             if ($repoFilm != null) {
@@ -81,7 +84,6 @@ class ApiMediaController extends Controller
                     $repository3 = $em->getRepository(EtatVisionnage::class);
                     $repository4 = $em->getRepository(GenreFilm::class);
                     if ($repository != null) {
-                        var_dump($session->get('id'));
                         $user = $repository->find($session->get('id'));
                         $realisateur = new Realisateur();
                         foreach ($realisateurs as $realisateur)
@@ -97,6 +99,8 @@ class ApiMediaController extends Controller
                                 $newReal = new Realisateur();
                                 $newReal->setNomRealisateur($realisat['0']);
                                 $newReal->setPrenomRealisateur($realisat['1']);
+                                $em->persist($newReal);
+                                $em->flush();
                             } else {
                                 $infoFilm->setIdRealisateur($real);
                                 $titreIdentite->setIdTitre($infoFilm);
@@ -120,6 +124,8 @@ class ApiMediaController extends Controller
                                 if ($genreBDD == null) {
                                     $genrefilm = new GenreFilm();
                                     $genrefilm->setLibelleGenre($ungenre);
+                                    $em->persist($genrefilm);
+                                    $em->flush();
                                 } else {
                                     $infoFilm->setIdGenrefilm($genreBDD);
                                 }
@@ -162,24 +168,39 @@ class ApiMediaController extends Controller
                     }
                 }
 
-                $repository5 = $em->getRepository(TitreIdentite::class);
-                if ($repository5 != null) {
-                    $session = new Session();
-                    $titreIdent = $repository5->findBy(['id' => $session->get(['id'])]);
-                    $noteTitre = $titreIdent->getNote();
-                    $avisTitre = $titreIdent->getAvis();
+                $repoCheckFilm = $em->getRepository(TitreIdentite::class);
+                if ($repoCheckFilm != null) {
+                        $queryBuilder = $em->createQueryBuilder();
+                        $queryBuilder->update(TitreIdentite::class, 'ti')
+                            ->set('ti.Avis', '?1')
+                            ->set('ti.Note', '?2')
+                            ->where('ti.Id_user = ?3 AND ti.id_titre = ?4')
+                            ->setParameter(1, $_POST['avis'])
+                            ->setParameter(2, $_POST['note'])
+                            ->setParameter(3, $session->get('id'))
+                            ->setParameter(4, $infoFilm->getId());
 
+                        $query = $queryBuilder->getQuery();
+
+                        echo $query->execute(), "\n";
+
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $repositoryFilm = $entityManager->getRepository(InformationTitre::class);
+                    $informationFilm = $repositoryFilm->findOneBy(['InfoTitre' => $titre]);
+                    if($informationFilm != null) {
+                        $repoCheckFilm = $entityManager->getRepository(TitreIdentite::class);
+                        if ($repoCheckFilm != null) {
+                            $informationFilm = $repoCheckFilm->findOneBy(
+                                ['id_titre' => $informationFilm->getId(),
+                                    'Id_user' => $session->get('id')
+                                ]);
+                            if($informationFilm != null){
+                                $checkavisTitre = $informationFilm->getAvis();
+                                $checknoteTitre = $informationFilm->getNote();
+                            }
+                        }
+                    }
                 }
-                return $this->render('api_media/index.html.twig', [
-                    'controller_name' => 'ApiMediaController',
-                    'session' => $_SESSION['_sf2_attributes'],
-                    'noteTitre' => $noteTitre,
-                    'avisTitre' => $avisTitre
-                ]);
-            }
-        }
-
-
                 return $this->render('api_media/index.html.twig', [
                     'controller_name' => 'ApiMediaController',
                     'session' => $_SESSION['_sf2_attributes'],
@@ -197,7 +218,48 @@ class ApiMediaController extends Controller
                     'pays' => $pays[0],
                     'poster' => $poster[0],
                     'id' => $id,
+                    'noteTitre' => $checknoteTitre,
+                    'avisTitre' => $checkavisTitre
                 ]);
+            }
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $repositoryFilm = $entityManager->getRepository(InformationTitre::class);
+        $informationFilm = $repositoryFilm->findOneBy(['InfoTitre' => $titre]);
+        if($informationFilm != null) {
+            $repoCheckFilm = $entityManager->getRepository(TitreIdentite::class);
+            if ($repoCheckFilm != null) {
+                $informationFilm = $repoCheckFilm->findOneBy(
+                    ['id_titre' => $informationFilm->getId(),
+                        'Id_user' => $session->get('id')
+                    ]);
+                if($informationFilm != null){
+                    $checkavisTitre = $informationFilm->getAvis();
+                    $checknoteTitre = $informationFilm->getNote();
+                }
+            }
+        }
+            return $this->render('api_media/index.html.twig', [
+                'controller_name' => 'ApiMediaController',
+                'session' => $_SESSION['_sf2_attributes'],
+                'titre' => $titre[0],
+                'year' => $year[0],
+                'pegi' => $pegi[0],
+                'realisation' => $realisation[0],
+                'duree' => $duree[0],
+                'genre' => $genre[0],
+                'realisateur' => $realisateurs[0],
+                'scenariste' => $scenariste[0],
+                'acteur' => $acteur[0],
+                'intrigue' => $intrigue[0],
+                'langue' => $langue[0],
+                'pays' => $pays[0],
+                'poster' => $poster[0],
+                'id' => $id,
+                'noteTitre' =>$checknoteTitre,
+                'avisTitre' =>$checkavisTitre
+            ]);
     }
 
         public function search(string $nomFilm)
