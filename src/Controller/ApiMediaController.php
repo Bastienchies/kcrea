@@ -66,8 +66,7 @@ class ApiMediaController extends Controller
             'intrigue' => $intrigue[0],
             'langue' => $langue[0],
             'pays' => $pays[0],
-            'poster' => $poster[0],
-            'session'   => $_SESSION['_sf2_attributes']
+            'poster' => $poster[0]
         ]);
 
     }
@@ -79,8 +78,7 @@ class ApiMediaController extends Controller
         $movie[] = Imdb::search($nomFilm);
         return $this->render('api_media/index.html.twig', [
             'controller_name' => 'ApiMediaController',
-            'films' => $movie,
-            'session'   => $_SESSION['_sf2_attributes']
+            'films' => $movie
         ]);
 
     }
