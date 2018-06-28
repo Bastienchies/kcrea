@@ -18,6 +18,7 @@ class ApiMediaController extends Controller
      */
     public function index($id)
     {
+        
         Imdb::setApiKey("1748ba92");
 
         $film = new Film;
