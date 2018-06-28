@@ -6,6 +6,7 @@ use App\Entity\CompoGroupe;
 use App\Entity\GroupeUtilisateur;
 use App\Entity\TypeUtilisateurGroupe;
 use App\Entity\Utilisateur;
+use Doctrine\Common\Collections\ArrayCollection;
 use function PHPSTORM_META\type;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -34,19 +35,16 @@ class GroupsController extends Controller
         $unGroupeCompo = new CompoGroupe();
 
 
-
         $form = $this->createFormBuilder($unGroupe)
             ->add('nom_groupe', TextType::class, [
-                'attr' => ['class' => 'form-control','name' => 'nom_groupe','placeholder' => 'Nom du groupe'],
+                'attr' => ['class' => 'form-control', 'name' => 'nom_groupe', 'placeholder' => 'Nom du groupe'],
             ])
-
             ->add('enregistrement', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-info btn-block','name' => 'password','type'=>'submit', 'value' => 'Enregistrement'],
+                'attr' => ['class' => 'btn btn-info btn-block', 'name' => 'password', 'type' => 'submit', 'value' => 'Enregistrement'],
             ])
             ->getForm();
 
         $form->handleRequest($request);
-
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -55,7 +53,7 @@ class GroupsController extends Controller
 
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
-            $unGroupe= $form->getData();
+            $unGroupe = $form->getData();
             $unGroupe->setImageGroupe('marvel.png');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($unGroupe);
@@ -70,7 +68,7 @@ class GroupsController extends Controller
 
 
             $request->getSession()->getFlashBag()
-                ->add('success-register-name', $unGroupe->getNomGroupe() );
+                ->add('success-register-name', $unGroupe->getNomGroupe());
             //return $this->redirectToRoute('task_success');
 
 
@@ -88,30 +86,68 @@ class GroupsController extends Controller
             $entityManager->flush();
         }
 
+        if (isset($_GET['idGroupe'])) {
+            $userUnGroupe = $this->userGroup($_GET['idGroupe']);
+            $arrayUser = new ArrayCollection();
+            foreach ($userUnGroupe AS $lesUser) {
+                $idUser = $lesUser->getIdUtilisateur();
+                $unUser = $this->recupUserGrp($idUser);
+                foreach ($unUser AS $unUserDuGrp) {
+                    $id = $unUserDuGrp->getId();
+                    $leNom = $unUserDuGrp->getNomUtilisateur();
+                    $lePrenom = $unUserDuGrp->getPrenomUtilisateur();
+                    $image = $unUserDuGrp->getAvatarUtilisateur();
+                    $arrayUser->add(array('id' => $id, 'nom' => $leNom, 'prenom' => $lePrenom, 'image' => $image));
+                }
+                var_dump($arrayUser);
+            }
+        }
+
         $groupes = $this->listeGroupe();
 
-        if (!$groupes){
-            $groupes =  'aucun groupe pour le moment';
-        }else {
+        if (!$groupes) {
+            $toutlesgroupe = 'aucun groupe pour le moment';
+        } else {
+            $array = new ArrayCollection();
             foreach ($groupes AS $groupe) {
                 $id = $groupe->getIdGroupe();
                 $mesgroupe = $this->mesGroupe($id);
 
 
+                foreach ($mesgroupe AS $lesGroupes) {
+
+                    $id = $lesGroupes->getId();
+                    $leNom = $lesGroupes->getNomGroupe();
+                    $image = $lesGroupes->getImageGroupe();
+                    $array->add(array('id' => $id, 'nom' => $leNom, 'image' => $image));
+
+                }
+
+                $toutlesgroupe = $this->listAllGroup();
 
 
             }
         }
 
-        $toutlesgroupe = $this->listAllGroup();
+        if (isset($_GET['idGroupe'])) {
+            return $this->render('groups/index.html.twig', [
+                'form' => $form->createView(),
+                'mesgroupe' => $mesgroupe,
+                'lesGroupes' => $toutlesgroupe,
+                'array' => $array,
+                'lesUserGroupe' => $arrayUser,
+            ]);
+        } else {
+            return $this->render('groups/index.html.twig', [
+                'form' => $form->createView(),
+                'mesgroupe' => $mesgroupe,
+                'lesGroupes' => $toutlesgroupe,
+                'array' => $array,
+                'lesUserGroupe' => "Personne dans ce groupe",
+            ]);
+        }
 
-        return $this->render('groups/index.html.twig', [
-            'form' =>$form->createView(),
-            'mesgroupe' => $mesgroupe,
-            'lesGroupes' => $toutlesgroupe
-        ]);
     }
-
 
 
     public function listeGroupe()
@@ -120,11 +156,11 @@ class GroupsController extends Controller
         $idUser = $session->get("id");
         $groupe = $this->getDoctrine()
             ->getRepository(CompoGroupe::Class)
-            ->findBy(array("id_utilisateur"=>$idUser));
+            ->findBy(array("id_utilisateur" => $idUser));
 
         if (!$groupe) {
 
-             $groupe =  'aucun groupe pour le moment';
+            $groupe = 'aucun groupe pour le moment';
 
         }
         return $groupe;
@@ -136,27 +172,47 @@ class GroupsController extends Controller
 
         $mesgroupe = $this->getDoctrine()
             ->getRepository(GroupeUtilisateur::Class)
-            ->findBy(array("id"=>$id));
+            ->findBy(array("id" => $id));
 
         if (!$mesgroupe) {
 
-            $mesgroupe =  'aucun groupe pour le moment';
+            $mesgroupe = 'aucun groupe pour le moment';
 
         }
         return $mesgroupe;
 
     }
 
+    public function userGroup($id)
+    {
+
+        $lesuser = $this->getDoctrine()
+            ->getRepository(CompoGroupe::Class)
+            ->findBy(array("id_groupe" => $id));
+
+        return $lesuser;
+
+    }
+
+    public function recupUserGrp($id)
+    {
+        $groupUser = $this->getDoctrine()
+            ->getRepository(Utilisateur::Class)
+            ->findBy(array("id" => $id));
+
+        return $groupUser;
+    }
 
 
-    public function listAllGroup() {
+    public function listAllGroup()
+    {
         $lesgroupes = $this->getDoctrine()
             ->getRepository(GroupeUtilisateur::Class)
             ->findAll();
 
         if (!$lesgroupes) {
 
-            $lesgroupes =  'aucun groupe pour le moment';
+            $lesgroupes = 'aucun groupe pour le moment';
 
         }
         return $lesgroupes;

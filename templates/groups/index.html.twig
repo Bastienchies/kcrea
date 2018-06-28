@@ -32,17 +32,20 @@
                                     </td>
                                 </tr>
                             {% else %}
-                                {% for Groupe in mesgroupe %}
+                                {% for group in array %}
                                     <tr>
                                         <td><img class="img-fluid rounded-circle img-grp"
-                                                 src="/img/groups/{{ Groupe.getImageGroupe() }}"></td>
-                                        <td><span class="titre-grp">{{ Groupe.getNomGroupe() }}</span></td>
+                                                 src="/img/groups/{{ group.image }}"></td>
+                                        <td><span class="titre-grp">{{ group.nom }}</span></td>
                                         <td>
                                             <button data-toggle="modal" data-target="#modaldemo5"
                                                     class="btn btn-primary btn-click">Voir
                                             </button>
-                                            <a href="#">
-                                                <button class="btn btn-warning btn-click">Administrer</button>
+                                            <a href="#modaldemo6?idGroupe={{ group.id }}">
+                                                <button data-toggle="modal" name="idGroupe" value="{{ group.id }}"
+                                                        data-target="#modaldemo6"
+                                                        class="btn btn-warning btn-click">Administrer
+                                                </button>
                                             </a>
                                         </td>
                                     </tr>
@@ -164,7 +167,7 @@
                         </table>
                     </form>
                 </div>
-                !-- modal-body -->
+                <!-- modal-body -->
             </div>
         </div><!-- modal-dialog -->
     </div>
@@ -195,6 +198,52 @@
                         <button type="button" class="btn btn-secondary tx-size-xs" data-dismiss="modal">Close</button>
                     </div>
                 </div><!-- modal-body -->
+            </div>
+        </div><!-- modal-dialog -->
+    </div>
+</div>
+
+
+<div id="modaldemo6" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content tx-size-sm">
+            <div class="modal-header pd-x-20">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Voir mon groupe</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div>
+
+                <table class="table">
+                    <tbody>
+                    {% if mesgroupe == "Personne dans ce groupe" %}
+                        <tr>
+                            <td>Personne dans ce groupe
+                            </td>
+                        </tr>
+                    {% else %}
+                        {% for user in lesUserGroupe %}
+                            <tr>
+                                <td><img class="img-fluid rounded-circle img-grp"
+                                         src="/img/avatars/{{ user.image }}"></td>
+                                <td><span class="titre-grp">{{ user.prenom }}</span></td>
+                                <td><span class="titre-grp">{{ user.nom }}</span></td>
+                                <td><a href="#">
+                                        <button class="btn btn-primary btn-click" name="id"
+                                                value="{{ user.id }}">Retirer
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary tx-size-xs" data-dismiss="modal">Close
+                        </button>
+                    </div>
+                </table>
             </div>
         </div><!-- modal-dialog -->
     </div>
