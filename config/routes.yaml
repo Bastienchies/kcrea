@@ -14,6 +14,10 @@ profile:
     path: /profile
     controller: App\Controller\ProfileController::index
 
+profile_guest:
+    path: /profile/{id}
+    controller: App\Controller\ProfileController::showProfile
+
 groups:
     path: /groups
     controller: App\Controller\GroupsController::index

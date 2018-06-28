@@ -70,10 +70,6 @@ class LoginController extends Controller
                     'email_utilisateur' => $credentials['email_utilisateur'],
                     'password_utilisateur' => $hashedpass,
                 ]);
-                $utilisateur->setRoles("ROLE_USER");
-                //$utilisateur->setRoles($role);
-                $em->persist($utilisateur);
-                $em->flush();
                 if($utilisateur != null) {
                     $session = new Session();
                     $session->set('nom', $utilisateur->getNomUtilisateur());
@@ -81,9 +77,7 @@ class LoginController extends Controller
                     $session->set('email', $utilisateur->getEmailUtilisateur());
                     $session->set('id',$utilisateur->getId());
                     $session->set('avatar', $utilisateur->getAvatarUtilisateur());
-
-                    var_dump($role->getRole());
-                    //return $this->redirectToRoute('home');
+                    return $this->redirectToRoute('home');
                 }
             }
             else
