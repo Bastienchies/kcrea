@@ -1,5 +1,6 @@
 <body>
 {% include 'common/navLeft.html.twig' %}
+{% include 'common/assetsInclude.html.twig' %}
 {% include 'common/navTop.html.twig' %}
 
 <style>
@@ -9,56 +10,65 @@
 <link href="{{ asset('css/api_mediaStyle.css') }}" rel="stylesheet" />
 
 <div class="br-mainpanel">
+    <div class="d-sm-flex align-items-center pd-y-20 pd-x-30 bg-gray-200">
         <div class="row">
-            <div id="poster">
-                <img src="{{ poster }}"/>
-            </div>
-            <div id="titre_note">
-                <h1>
-                    {{ titre }}<br>
-                    <div id="rating">
-                        <a href="/api_media">
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                        </a>
+            <div class="col-12">
+                <div class="bg-white shadow-base rounded col-12">
+
+                    <div id="poster" class="col-5">
+                        <img src="{{ poster }}"/>
                     </div>
-                </h1>
+                    <div id="titre_note" class="col-5">
+                        <form action="{{ id }}" method="post">
+                            <h1>
+                                {{ titre }}<br>
+                                <div id="rating">
+                                    <button id="btnNote" name="note" value="1" type="submit"><span>★</span></button>
+                                    <button id="btnNote" name="note" value="2" type="submit"><span>★</span></button>
+                                    <button id="btnNote" name="note" value="3" type="submit"><span>★</span></button>
+                                    <button id="btnNote" name="note" value="4" type="submit"><span>★</span></button>
+                                    <button id="btnNote" name="note" value="5" type="submit"><span>★</span></button>
+                                </div>
+                            </h1>
 
-                <br>
+                            <br>
 
-                <b>Année de sortie :</b> {{ year }}
-                <br><br>
-                <b>Age minimum conseillé :</b> {{ pegi }}
-                <br><br>
-                <b>Realisation :</b> {{ realisation }}
-                <br><br>
-                <b>Durée :</b> {{ duree }}
-                <br><br>
-                <b>Genre(s) :</b> {{ genre }}
-                <br><br>
-                <b>Pays :</b> {{ pays }}
+                            <b>Année de sortie :</b> {{ year }}
+                            <br><br>
+                            <b>Age minimum conseillé :</b> {{ pegi }}
+                            <br><br>
+                            <b>Realisation :</b> {{ realisation }}
+                            <br><br>
+                            <b>Durée :</b> {{ duree }}
+                            <br><br>
+                            <b>Genre(s) :</b> {{ genre }}
+                            <br><br>
+                            <b>Pays :</b> {{ pays }}
+                        </form>
+                    </div>
+
+                    <div class="col-10" style="margin-top: 2%">
+                        <div id="synopsis">
+                            <h6><b>Synopsis :</b></h6> {{ intrigue }}
+                        </div>
+                        <div id="realisateur_info">
+                            <h6><b>Realisateur(s) :</b></h6> {{ realisateur }}
+                        </div>
+                        <div id="scenariste_info">
+                            <h6><b>Scenariste(s) :</b></h6> {{ scenariste }}
+                        </div>
+                        <div id="acteur_info">
+                            <h6><b>Acteur(s) :</b></h6> {{ acteur }}
+                        </div>
+                        <div id="langue_info">
+                            <h6><b>Langue(s) :</b></h6> {{ langue }}
+                        </div>
+                    </div>
             </div>
-        </div>
-        <br>
-        <div id="synopsis">
-            <h6><b>Synopsis :</b></h6> {{ intrigue }}
-        </div>
-        <div id="realisateur_info">
-            <h6><b>Realisateur(s) :</b></h6> {{ realisateur }}
-        </div>
-        <div id="scenariste_info">
-            <h6><b>Scenariste(s) :</b></h6> {{ scenariste }}
-        </div>
-        <div id="acteur_info">
-            <h6><b>Acteur(s) :</b></h6> {{ acteur }}
-        </div>
-        <div id="langue_info">
-            <h6><b>Langue(s) :</b></h6> {{ langue }}
         </div>
     </div>
+</div>
+</div>
 
 <script src="{{ asset('lib/jquery/jquery.js') }}"></script>
 </body>

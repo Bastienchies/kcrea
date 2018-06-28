@@ -14,7 +14,12 @@
 /node_modules/
 /public/build/
 /.idea/
+<<<<<<< HEAD
 /.idea/workspace.xml
+=======
+/.idea
+.idea
+>>>>>>> 3fab1b2209bd1fe50ed823ccaad6ff98612108c8
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-pack ###

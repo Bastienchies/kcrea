@@ -48,11 +48,11 @@ class TitreIdentite
         return $this->Note;
     }
 
-    public function setNote(int $Note): self
+    public function setNote(int $Note): int
     {
         $this->Note = $Note;
 
-        return $this;
+        return $this->Note;
     }
 
     public function getAvis(): ?string

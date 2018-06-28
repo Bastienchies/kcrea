@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\InformationTitre;
+use App\Entity\TitreIdentite;
+use App\Entity\Utilisateur;
 use Jleagle\Imdb\Imdb;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,13 +19,13 @@ class ApiMediaController extends Controller
     /**
      * @Route("/api/media", name="api_media")
      */
-    public function index()
+    public function index($id)
     {
         Imdb::setApiKey("1748ba92");
 
         $film = new Film;
 
-        $movie[] = Imdb::retrieve('deadpool 2');
+        $movie[] = Imdb::retrieve($id);
         $film->setTitre(array_column($movie,'title'));
         $film->setYear(array_column($movie,'year'));
         $film->setPegi(array_column($movie,'rated'));
@@ -51,6 +54,25 @@ class ApiMediaController extends Controller
         $pays = $film->getPays();
         $poster = $film->getPoster();
 
+        if(isset($_POST['note'])){
+            $titreIdentite = new TitreIdentite();
+            $note = $_POST['note'];
+            $titreIdentite->setNote($note);
+
+            $informationTitre = new InformationTitre();
+            $informationTitre->setTitreOriginal($titre['0']);
+            $informationTitre->setPosterLink($poster);
+            $informationTitre->setTitreInfotitre($intrigue['0']);
+
+            $titreIdentite->setIdTitre($informationTitre->getId());
+            $titreIdentite->setIdUser(null);
+            $titreIdentite->setAvis("Vraiment bien");
+            $film->setNote($_POST['note']);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($titreIdentite);
+            $entityManager->flush();
+        }
+
         return $this->render('api_media/index.html.twig', [
             'controller_name' => 'ApiMediaController',
             'session'   => $_SESSION['_sf2_attributes'],
@@ -67,7 +89,7 @@ class ApiMediaController extends Controller
             'langue' => $langue[0],
             'pays' => $pays[0],
             'poster' => $poster[0],
-            'session'   => $_SESSION['_sf2_attributes']
+            'id' => $id
         ]);
 
     }
@@ -79,8 +101,7 @@ class ApiMediaController extends Controller
         $movie[] = Imdb::search($nomFilm);
         return $this->render('api_media/index.html.twig', [
             'controller_name' => 'ApiMediaController',
-            'films' => $movie,
-            'session'   => $_SESSION['_sf2_attributes']
+            'films' => $movie
         ]);
 
     }

@@ -14,6 +14,10 @@ profile:
     path: /profile
     controller: App\Controller\ProfileController::index
 
+profile_guest:
+    path: /profile/{id}
+    controller: App\Controller\ProfileController::showProfile
+
 groups:
     path: /groups
     controller: App\Controller\GroupsController::index
@@ -23,5 +27,5 @@ create_group:
     controller: App\Controller\CreateGroupController::index
 
 api_media:
-  path: /api_media
-  controller: App\Controller\ApiMediaController::index
+    path: /api_media/{id}
+    controller: App\Controller\ApiMediaController::index
