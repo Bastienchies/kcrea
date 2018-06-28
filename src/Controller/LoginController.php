@@ -72,6 +72,7 @@ class LoginController extends Controller
                 ]);
                 if($utilisateur != null) {
                     $session = new Session();
+                    $session->set('id', $utilisateur->getId());
                     $session->set('nom', $utilisateur->getNomUtilisateur());
                     $session->set('prenom', $utilisateur->getPrenomUtilisateur());
                     $session->set('email', $utilisateur->getEmailUtilisateur());

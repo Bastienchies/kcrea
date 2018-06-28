@@ -19,12 +19,20 @@ class CompoGroupe
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur")
+<<<<<<< HEAD
+     * @ORM\Column(type="integer")
+=======
+>>>>>>> b98cf1014d9c4bd60ce62a929f3fca7232cd0766
      * @ORM\JoinColumn(nullable=false,name="id_utilisateur",referencedColumnName="id_utilisateur")
      */
     private $id_utilisateur;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeUtilisateurGroupe")
+<<<<<<< HEAD
+     *  @ORM\Column(type="integer")
+=======
+>>>>>>> b98cf1014d9c4bd60ce62a929f3fca7232cd0766
      * @ORM\JoinColumn(nullable=false, name="id_typeuser",referencedColumnName="id")
      *
      */
@@ -32,6 +40,10 @@ class CompoGroupe
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\GroupeUtilisateur")
+<<<<<<< HEAD
+     *  @ORM\Column(type="integer")
+=======
+>>>>>>> b98cf1014d9c4bd60ce62a929f3fca7232cd0766
      * @ORM\JoinColumn(nullable=false,name="id_groupe",referencedColumnName="id")
      */
     private $id_groupe;
@@ -41,36 +53,43 @@ class CompoGroupe
         return $this->id;
     }
 
-    public function getIdUtilisateur(): ?Utilisateur
+    public function getIdUtilisateur()
     {
         return $this->id_utilisateur;
     }
 
-    public function setIdUtilisateur(?Utilisateur $id_utilisateur): self
+
+
+    public function setIdUtilisateur( $id_utilisateur): self
+
     {
         $this->id_utilisateur = $id_utilisateur;
 
         return $this;
     }
 
-    public function getIdTypeuser(): ?TypeUtilisateurGroupe
+    public function getIdTypeuser()
     {
         return $this->id_typeuser;
     }
 
-    public function setIdTypeuser(?TypeUtilisateurGroupe $id_typeuser): self
+    public function setIdTypeuser( $id_typeuser): self
+
     {
         $this->id_typeuser = $id_typeuser;
 
         return $this;
     }
 
-    public function getIdGroupe(): ?GroupeUtilisateur
+
+    public function getIdGroupe()
     {
         return $this->id_groupe;
     }
 
-    public function setIdGroupe(?GroupeUtilisateur $id_groupe): self
+
+    public function setIdGroupe( $id_groupe): self
+
     {
         $this->id_groupe = $id_groupe;
 

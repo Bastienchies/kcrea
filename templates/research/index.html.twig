@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+{% include 'common/navLeft.html.twig' %}
+{% include 'common/navTop.html.twig' %}
+{% include 'common/assetsInclude.html.twig' %}
+
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<link href="{{ asset('css/api_mediaStyle.css') }}" rel="stylesheet" />
+
+<div class="br-mainpanel">
+    <div class="d-sm-flex align-items-center pd-y-20 pd-x-30 bg-gray-200 col-12">
+            <div class="col-12">
+                <div class="bg-white shadow-base rounded col-12" style="padding-top: 1%;padding-left: 1%;">
+                    <h1>Recherche</h1>
+                    {{ form_start(form) }}
+                    <div class="col-8" style="display: inline-block;">
+                    {{ form_widget(form.title) }}
+                    </div>
+                    <div class="col-3" style="display: inline-block;">
+                    {{ form_widget(form.Search) }}
+                    </div>
+                    {{ form_end(form) }}
+
+                    <table class="table-striped col-12" style="margin-top: 1%;">
+                        <thead>
+                            <th>Affiche</th>
+                            <th>Titre</th>
+                            <th>Sortie</th>
+                            <th>Plus d'infos</th>
+                        </thead>
+                        {% if json is defined %}
+                        {% for film in json %}
+                        <tr>
+                            <td><img style="width: 100px;height: 150px;" src="{{ film.Poster }}"></td>
+                            <td>{{ film.Title }}</td>
+                            <td>{{ film.Year }}</td>
+                            <td><a target="_blank" class="btn btn-warning" href="api_media/{{ film.imdbID }}">Voir +</a></td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<script src="{{ asset('lib/jquery/jquery.js') }}"></script>
+</body>
+{% include 'common/footer.html.twig' %}
+</html>
