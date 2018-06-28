@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Jleagle\Imdb\Imdb;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Unirest;
 
 class ResearchController extends Controller
 {
@@ -88,10 +89,15 @@ class ResearchController extends Controller
 
         $film = new Film();
         $form = $this->createFormBuilder()
-            ->add('title', TextType::class)
-            ->add('Search', SubmitType::class)
+            ->add('title', TextType::class, [
+            'attr' => ['class' => 'form-control']
+            ])
+            ->add('Search', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary']
+            ])
             ->getForm();
         $form->handleRequest($request);
+        $json = '';
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form['title']->getData();
             /*$repository = $this
@@ -138,13 +144,20 @@ class ResearchController extends Controller
                 $poster = $filmResult->getPoster();*/
             }
 
-            print_r($filmsToSend);
+            //$url = "http://www.omdbapi.com/?apikey=1748ba92&s='$data'";
+            $headers = array('Accept' => 'application/json');
+            $query = array('apikey' => '1748ba92', 's' => $data);
+            $response = Unirest\Request::get('http://www.omdbapi.com',$headers,$query);
 
+            //print_r($response->body);
 
-            /*return $this->render('research/index.html.twig', array(
+            $array = json_decode(json_encode($response->body), True);
+
+            return $this->render('research/index.html.twig', array(
                 'form' => $form->createView(),
-                'research' => $filmsToSend
-            ));*/
+                'research' => $filmsToSend,
+                'json' => $array['Search']
+            ));
         }
         return $this->render('research/index.html.twig', array(
             'form' => $form->createView()
