@@ -19,20 +19,14 @@ class CompoGroupe
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur")
-<<<<<<< HEAD
      * @ORM\Column(type="integer")
-=======
->>>>>>> b98cf1014d9c4bd60ce62a929f3fca7232cd0766
      * @ORM\JoinColumn(nullable=false,name="id_utilisateur",referencedColumnName="id_utilisateur")
      */
     private $id_utilisateur;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeUtilisateurGroupe")
-<<<<<<< HEAD
      *  @ORM\Column(type="integer")
-=======
->>>>>>> b98cf1014d9c4bd60ce62a929f3fca7232cd0766
      * @ORM\JoinColumn(nullable=false, name="id_typeuser",referencedColumnName="id")
      *
      */
@@ -40,10 +34,7 @@ class CompoGroupe
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\GroupeUtilisateur")
-<<<<<<< HEAD
      *  @ORM\Column(type="integer")
-=======
->>>>>>> b98cf1014d9c4bd60ce62a929f3fca7232cd0766
      * @ORM\JoinColumn(nullable=false,name="id_groupe",referencedColumnName="id")
      */
     private $id_groupe;
