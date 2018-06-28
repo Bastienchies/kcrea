@@ -1,4 +1,4 @@
-<body>
+<body xmlns:width="http://www.w3.org/1999/xhtml">
 {% include 'common/navLeft.html.twig' %}
 {% include 'common/assetsInclude.html.twig' %}
 {% include 'common/navTop.html.twig' %}
@@ -22,14 +22,26 @@
                         <form action="{{ id }}" method="post">
                             <h1>
                                 {{ titre }}<br>
-                                <div id="rating">
-                                    <button id="btnNote" name="note" value="1" type="submit"><span>★</span></button>
-                                    <button id="btnNote" name="note" value="2" type="submit"><span>★</span></button>
-                                    <button id="btnNote" name="note" value="3" type="submit"><span>★</span></button>
-                                    <button id="btnNote" name="note" value="4" type="submit"><span>★</span></button>
-                                    <button id="btnNote" name="note" value="5" type="submit"><span>★</span></button>
-                                </div>
                             </h1>
+
+                            <br>
+
+                            <div id="rating">
+                                {% if noteTitre is not defined or noteAvis is not defined %}
+                                        <b>Avis :</b> <input style="font-size: 12px" name="avis"><br>
+                                        <button id="btnNote" name="note" value="1" type="submit"><span>★</span></button>
+                                        <button id="btnNote" name="note" value="2" type="submit"><span>★</span></button>
+                                        <button id="btnNote" name="note" value="3" type="submit"><span>★</span></button>
+                                        <button id="btnNote" name="note" value="4" type="submit"><span>★</span></button>
+                                        <button id="btnNote" name="note" value="5" type="submit"><span>★</span></button><br>
+                                {% else %}
+                                    {% for i in 1..noteTitre %}
+                                        <button id="btnNote" name="note" value="{{ loop.iteration }}" type="submit"><span>★</span></button>
+                                    {% endfor %}
+                                {% endif %}
+
+
+                            </div>
 
                             <br>
 

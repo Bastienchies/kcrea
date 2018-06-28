@@ -33,7 +33,7 @@ class TitreIdentite
     private $Id_user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Titre")
+     * @ORM\ManyToOne(targetEntity="App\Entity\InformationTitre", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false,name="id_titre",referencedColumnName="id")
      */
     private $id_titre;
@@ -79,12 +79,12 @@ class TitreIdentite
         return $this;
     }
 
-    public function getIdTitre(): ?Titre
+    public function getIdTitre(): ?InformationTitre
     {
         return $this->id_titre;
     }
 
-    public function setIdTitre(?Titre $id_titre): self
+    public function setIdTitre(?InformationTitre $id_titre): self
     {
         $this->id_titre = $id_titre;
 

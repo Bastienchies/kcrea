@@ -36,11 +36,11 @@ class Realisateur
         return $this->Nom_realisateur;
     }
 
-    public function setNomRealisateur(string $Nom_realisateur): self
+    public function setNomRealisateur(string $Nom_realisateur)
     {
         $this->Nom_realisateur = $Nom_realisateur;
 
-        return $this;
+        return $this->Nom_realisateur;
     }
 
     public function getPrenomRealisateur(): ?string
@@ -48,10 +48,10 @@ class Realisateur
         return $this->Prenom_realisateur;
     }
 
-    public function setPrenomRealisateur(string $Prenom_realisateur): self
+    public function setPrenomRealisateur(string $Prenom_realisateur)
     {
         $this->Prenom_realisateur = $Prenom_realisateur;
 
-        return $this;
+        return $this->Prenom_realisateur;
     }
 }

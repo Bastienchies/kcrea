@@ -22,7 +22,7 @@ class InformationTitre
     private $InfoTitre;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string")
      */
     private $DateSortie;
 
@@ -76,12 +76,12 @@ class InformationTitre
         return $this;
     }
 
-    public function getDateSortie(): ?\DateTimeInterface
+    public function getDateSortie()
     {
         return $this->DateSortie;
     }
 
-    public function setDateSortie(\DateTimeInterface $DateSortie): self
+    public function setDateSortie($DateSortie): self
     {
         $this->DateSortie = $DateSortie;
 
