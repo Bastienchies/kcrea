@@ -26,6 +26,11 @@ class EtatVisionnage
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function getLibelleVisionnage(): ?string
     {
         return $this->Libelle_visionnage;

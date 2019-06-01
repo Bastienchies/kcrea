@@ -1,11 +1,18 @@
 #poster{
     margin-left: 35px;
     margin-top: 25px;
+    display: inline-block;
+}
+
+#poster img
+{
+    border: 1px solid black;
 }
 
 #titre_note{
-    margin-left: 150px;
     margin-top : 25px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 #rating span {
@@ -19,7 +26,7 @@
 }
 
 #rating span.hover {
-    color: cornflowerblue;
+    color: royalblue;
     opacity: 1;
     transform: rotateX(0deg);
     text-shadow: 0 0 30px #ffc;
@@ -60,3 +67,16 @@
     height: 75px;
     margin-left: 25px;
 }
+
+#btnNote{
+    color: royalblue;
+    background: transparent;
+    border: transparent;
+    transform: rotateX(0deg);
+    text-shadow: 0 0 30px #ffc;
+}
+
+#btnNote:hover{
+    outline-style: none;
+}
+
